@@ -1,4 +1,4 @@
-# Headview
+# ![Headview](./public/headview.svg) Headview
 
 A Vue frontend for [Headscale](https://headscale.net/)
 
