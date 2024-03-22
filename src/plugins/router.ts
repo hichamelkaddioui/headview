@@ -21,6 +21,8 @@ export const routes = [
   },
 ] as const;
 
+export type RouteName = (typeof routes)[number]["name"];
+
 export default createRouter({
   history: createWebHistory(),
   routes,

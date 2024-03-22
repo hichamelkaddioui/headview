@@ -52,35 +52,7 @@
                 </div>
               </TransitionChild>
               <div class="h-0 flex-1 overflow-y-auto pb-4 pt-5">
-                <div class="flex flex-shrink-0 items-center px-4">
-                  <img class="h-8 w-auto" src="/headview.svg" alt="Headview" />
-                  <h3 class="ml-3 font-semibold">Headview</h3>
-                </div>
-                <nav class="mt-5 space-y-1 px-2">
-                  <router-link
-                    v-for="item in navigation"
-                    :key="item.name"
-                    :to="item.path"
-                    :class="[
-                      item.current
-                        ? 'bg-gray-100 text-indigo-600'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                      'group flex items-center rounded-xl px-2 py-2 text-base font-medium',
-                    ]"
-                  >
-                    <component
-                      :is="item.icon"
-                      :class="[
-                        item.current
-                          ? 'text-indigo-500'
-                          : 'text-gray-400 group-hover:text-gray-500',
-                        'mr-4 h-6 w-6 flex-shrink-0',
-                      ]"
-                      aria-hidden="true"
-                    />
-                    {{ item.name }}
-                  </router-link>
-                </nav>
+                <AppSidebar v-bind="{ navigation }" />
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -98,35 +70,7 @@
         class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white"
       >
         <div class="flex flex-1 flex-col overflow-y-auto pb-4 pt-5">
-          <div class="flex flex-shrink-0 items-center px-4">
-            <img class="h-8 w-auto" src="/headview.svg" alt="Headview" />
-            <h3 class="ml-3 font-semibold">Headview</h3>
-          </div>
-          <nav class="mt-5 flex-1 space-y-1 bg-white px-2">
-            <router-link
-              v-for="item in navigation"
-              :key="item.name"
-              :to="item.path"
-              :class="[
-                item.current
-                  ? 'bg-gray-100 text-indigo-600'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                'group flex items-center rounded-xl px-2 py-2 text-sm font-medium',
-              ]"
-            >
-              <component
-                :is="item.icon"
-                :class="[
-                  item.current
-                    ? 'text-indigo-500'
-                    : 'text-gray-400 group-hover:text-gray-500',
-                  'mr-3 h-6 w-6 flex-shrink-0',
-                ]"
-                aria-hidden="true"
-              />
-              {{ item.name }}
-            </router-link>
-          </nav>
+          <AppSidebar v-bind="{ navigation }" />
         </div>
       </div>
     </div>
@@ -177,25 +121,25 @@ import {
   HomeIcon,
   ServerStackIcon,
 } from "@heroicons/vue/24/outline";
-import { routes } from "../plugins/router";
+import { type RouteName, routes } from "../plugins/router";
+import AppSidebar, { NavigationItem } from "./AppSidebar.vue";
 
-const router = useRoute();
+const route = useRoute();
 
 const sidebarOpen = ref(false);
 
-type RouteName = (typeof routes)[number]["name"];
 const icons: Record<RouteName, FunctionalComponent> = {
   Dashboard: HomeIcon,
   Machines: ServerStackIcon,
   Users: UsersIcon,
 };
-const navigation = computed(() =>
+const navigation = computed<NavigationItem[]>(() =>
   routes.map((item) => {
-    const { name, path } = item;
-    const current = router.name === name;
+    const { name } = item;
+    const current = route.name === name;
     const icon = icons[name];
 
-    return { name, path, current, icon };
+    return { name, current, icon };
   }),
 );
 const current = computed(() => navigation.value.find(({ current }) => current));
