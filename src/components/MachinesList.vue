@@ -40,13 +40,18 @@
               {{ machine.givenName }}
             </th>
             <td class="p-6">
-              <CodeBlock
+              <span
                 v-for="ip in machine.ipAddresses.sort(
                   (a, b) => a.length - b.length,
                 )"
                 :key="ip"
-                :text="ip"
-              ></CodeBlock>
+                class="hover:cursor-pointer"
+                title="Click to copy"
+              >
+                <UseClipboard v-slot="{ copy, copied }" :source="ip">
+                  <CodeBlock :text="copied ? 'Copied!' : ip" @click="copy()" />
+                </UseClipboard>
+              </span>
             </td>
             <td class="p-6">
               <div class="flex items-center">
@@ -101,6 +106,7 @@ import {
   ArrowTopRightOnSquareIcon,
   SquaresPlusIcon,
 } from "@heroicons/vue/24/outline";
+import { UseClipboard } from "@vueuse/components";
 import { machineFactory } from "../helpers/data";
 import CodeBlock from "./CodeBlock.vue";
 

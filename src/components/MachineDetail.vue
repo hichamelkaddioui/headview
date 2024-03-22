@@ -73,12 +73,22 @@
                 </span>
 
                 <div class="ml-4 flex-shrink-0">
-                  <a
-                    href="#"
-                    class="font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Copy
-                  </a>
+                  <UseClipboard v-slot="{ copy, copied }" :source="ip">
+                    <button
+                      type="button"
+                      class="inline-flex items-center rounded-xl border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      @click="copy()"
+                      :disabled="copied"
+                    >
+                      <component
+                        :is="copied ? CheckIcon : ClipboardIcon"
+                        class="me-2 h-5 w-5"
+                        aria-hidden="true"
+                      />
+
+                      {{ copied ? "Copied!" : "Copy" }}
+                    </button>
+                  </UseClipboard>
                 </div>
               </li>
             </ul>
@@ -145,6 +155,8 @@
 
 <script setup lang="ts">
 import { useRoute } from "vue-router";
+import { ClipboardIcon, CheckIcon } from "@heroicons/vue/24/outline";
+import { UseClipboard } from "@vueuse/components";
 import { machineFactory } from "../helpers/data";
 import CodeBlock from "./CodeBlock.vue";
 
