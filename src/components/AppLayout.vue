@@ -52,7 +52,7 @@
                 </div>
               </TransitionChild>
               <div class="h-0 flex-1 overflow-y-auto pb-4 pt-5">
-                <AppSidebar v-bind="{ navigation }" />
+                <AppSidebar />
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -70,7 +70,7 @@
         class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white"
       >
         <div class="flex flex-1 flex-col overflow-y-auto pb-4 pt-5">
-          <AppSidebar v-bind="{ navigation }" />
+          <AppSidebar />
         </div>
       </div>
     </div>
@@ -93,7 +93,7 @@
         <div class="py-6">
           <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
             <h1 class="text-2xl font-semibold text-gray-900">
-              {{ current?.name }}
+              {{ $route.name }}
             </h1>
           </div>
           <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
@@ -106,41 +106,15 @@
 </template>
 
 <script setup lang="ts">
-import { FunctionalComponent, computed, ref } from "vue";
-import { useRoute } from "vue-router";
+import { ref } from "vue";
 import {
   Dialog,
   DialogPanel,
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
-import {
-  UsersIcon,
-  Bars3Icon,
-  XMarkIcon,
-  HomeIcon,
-  ServerStackIcon,
-} from "@heroicons/vue/24/outline";
-import { type RouteName, routes } from "../plugins/router";
-import AppSidebar, { NavigationItem } from "./AppSidebar.vue";
-
-const route = useRoute();
+import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
+import AppSidebar from "./AppSidebar.vue";
 
 const sidebarOpen = ref(false);
-
-const icons: Record<RouteName, FunctionalComponent> = {
-  Dashboard: HomeIcon,
-  Machines: ServerStackIcon,
-  Users: UsersIcon,
-};
-const navigation = computed<NavigationItem[]>(() =>
-  routes.map((item) => {
-    const { name } = item;
-    const current = route.name === name;
-    const icon = icons[name];
-
-    return { name, current, icon };
-  }),
-);
-const current = computed(() => navigation.value.find(({ current }) => current));
 </script>

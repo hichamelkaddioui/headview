@@ -5,9 +5,9 @@
   </div>
   <nav class="mt-5 flex-1 space-y-1 bg-white px-2">
     <router-link
-      v-for="{ name, current, icon } in navigation"
+      v-for="{ name, path, current, icon } in navigation"
       :key="name"
-      :to="{ name }"
+      :to="path"
       :class="[
         current
           ? 'bg-gray-100 text-indigo-600'
@@ -31,14 +31,38 @@
 </template>
 
 <script setup lang="ts">
-import { FunctionalComponent } from "vue";
-import type { RouteName } from "../plugins/router";
+import { FunctionalComponent, computed } from "vue";
+import { useRoute } from "vue-router";
+import {
+  HomeIcon,
+  ServerStackIcon,
+  UsersIcon,
+} from "@heroicons/vue/24/outline";
+import { type RouteName, routes } from "../plugins/router";
 
 export interface NavigationItem {
   name: RouteName;
+  path: string;
   current: boolean;
-  icon: FunctionalComponent;
+  icon?: FunctionalComponent;
 }
 
-defineProps<{ navigation: NavigationItem[] }>();
+const route = useRoute();
+
+const icons: Partial<Record<RouteName, FunctionalComponent>> = {
+  Dashboard: HomeIcon,
+  Machines: ServerStackIcon,
+  Users: UsersIcon,
+};
+const navigation = computed<NavigationItem[]>(() =>
+  routes
+    .map((item) => {
+      const { name, path } = item;
+      const current = route.matched.some((m) => m.name === name);
+      const icon = icons[name];
+
+      return { name, path, current, icon };
+    })
+    .filter(({ icon }) => !!icon),
+);
 </script>

@@ -24,6 +24,12 @@ export const machineFactory = (idx: number) => {
   const id = faker.number.int({ max: 10 });
   const givenName = faker.animal.type() as keyof (typeof faker)["animal"];
   const name = faker.animal[givenName]();
+  const registerMethod = [
+    "REGISTER_METHOD_UNSPECIFIED",
+    "REGISTER_METHOD_AUTH_KEY",
+    "REGISTER_METHOD_CLI",
+    "REGISTER_METHOD_OIDC",
+  ][Math.floor(Math.random() * 4)];
 
   return {
     id: `${id}`,
@@ -38,7 +44,7 @@ export const machineFactory = (idx: number) => {
     expiry: faker.date.future(),
     preAuthKey: [preAuthKeyFactory()],
     createdAt: faker.date.past(),
-    registerMethod: "REGISTER_METHOD_UNSPECIFIED",
+    registerMethod,
     forcedTags: [],
     invalidTags: [],
     validTags: [],
