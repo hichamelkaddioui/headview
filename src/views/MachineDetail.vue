@@ -8,6 +8,111 @@
     </router-link>
   </div>
 
+  <template v-if="isLoading">
+    <div
+      class="overflow-hidden rounded-lg border border-gray-300 bg-white sm:rounded-2xl"
+    >
+      <div class="flex items-center justify-between px-4 py-5 sm:px-6">
+        <div>
+          <p class="my-2 h-4 w-48 rounded-full bg-gray-200"></p>
+          <p class="h-4 rounded-full bg-gray-200"></p>
+        </div>
+      </div>
+      <div class="overflow-x-auto border-t border-gray-200 px-4 py-5 sm:p-0">
+        <dl class="sm:divide-y sm:divide-gray-200">
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">Id</dt>
+            <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">Name</dt>
+            <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">Short domain</dt>
+            <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">IP addresses</dt>
+            <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <ul
+                role="list"
+                class="divide-y divide-gray-200 rounded-md border border-gray-200"
+              >
+                <li
+                  class="flex items-center justify-between overflow-x-auto py-3 pl-3 pr-4 text-sm"
+                >
+                  <p class="h-4 w-48 rounded-full bg-gray-200"></p>
+                </li>
+                <li
+                  class="flex items-center justify-between overflow-x-auto py-3 pl-3 pr-4 text-sm"
+                >
+                  <p class="h-4 w-48 rounded-full bg-gray-200"></p>
+                </li>
+              </ul>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">User</dt>
+            <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">Created at</dt>
+            <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">Register method</dt>
+            <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">Last seen</dt>
+            <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">
+              Last successful update
+            </dt>
+            <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">Expiration</dt>
+            <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">Machine key</dt>
+            <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+            </dd>
+          </div>
+          <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <dt class="text-sm font-medium text-gray-500">Node key</dt>
+            <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </template>
+
   <template v-if="machine">
     <div
       class="overflow-hidden rounded-lg border border-gray-300 bg-white sm:rounded-2xl"
@@ -267,7 +372,9 @@ import { api, useStateApi } from "../plugins/api";
 const { id } = useRoute().params;
 const params = { path: { machineId: String(id) } };
 const apiCall = () => api().GET("/api/v1/machine/{machineId}", { params });
-const { state, execute } = useStateApi(apiCall, { resetOnExecute: false });
+const { state, execute, isLoading } = useStateApi(apiCall, {
+  resetOnExecute: false,
+});
 
 // Modals
 const modalRenameOpen = ref(false);
