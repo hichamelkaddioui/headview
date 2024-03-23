@@ -38,10 +38,12 @@ import {
   ServerStackIcon,
   UsersIcon,
 } from "@heroicons/vue/24/outline";
-import { type RouteName, routes } from "../plugins/router";
+import { routes } from "../plugins/router";
 
-export interface NavigationItem {
-  name: RouteName;
+type NavigationItemName = "Dashboard" | "Machines" | "Users";
+
+interface NavigationItem<K = NavigationItemName> {
+  name: K;
   path: string;
   current: boolean;
   icon?: FunctionalComponent;
@@ -49,20 +51,41 @@ export interface NavigationItem {
 
 const route = useRoute();
 
-const icons: Partial<Record<RouteName, FunctionalComponent>> = {
+const icons: Record<NavigationItemName, FunctionalComponent> = {
   Dashboard: HomeIcon,
   Machines: ServerStackIcon,
   Users: UsersIcon,
 };
+
+const getPathForItem = (name: NavigationItemName) => {
+  const match = routes.find((route) => route.name === name);
+
+  if (match) {
+    return match.path;
+  }
+
+  const children = routes
+    .filter(({ children }) => !!children)
+    .flatMap(({ children }) => children);
+
+  const childMatch = children.find((route) => route?.name === name);
+
+  if (childMatch) {
+    return childMatch.path;
+  }
+
+  return "";
+};
+
 const navigation = computed<NavigationItem[]>(() =>
-  routes
-    .map((item) => {
-      const { name, path } = item;
+  Object.entries(icons)
+    .map(([n, icon]) => {
+      const name = n as NavigationItemName;
+      const path = getPathForItem(name);
       const current = route.matched.some((m) => m.name === name);
-      const icon = icons[name];
 
       return { name, path, current, icon };
     })
-    .filter(({ icon }) => !!icon),
+    .filter((e) => !!e),
 );
 </script>
