@@ -15,7 +15,6 @@
     "@vueuse/core": "^10.9.0",
     "openapi-fetch": "^0.9.3",
     "pinia": "^2.1.7",
-    "portable-fetch": "^3.0.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
