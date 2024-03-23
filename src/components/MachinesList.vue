@@ -28,6 +28,15 @@
           </tr>
         </thead>
         <tbody>
+          <tr v-if="isLoading">
+            <th scope="row" class="whitespace-nowrap px-6 py-4">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+            </th>
+            <td class="p-6"><p class="h-4 rounded-full bg-gray-200"></p></td>
+            <td class="p-6"><p class="h-4 rounded-full bg-gray-200"></p></td>
+            <td class="p-6"><p class="h-4 rounded-full bg-gray-200"></p></td>
+            <td class="p-6"><p class="h-4 rounded-full bg-gray-200"></p></td>
+          </tr>
           <tr
             v-for="machine in machines"
             :key="machine.id"
@@ -106,20 +115,19 @@ import { computed } from "vue";
 import { SquaresPlusIcon } from "@heroicons/vue/24/outline";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
-import { useAsyncState } from "@vueuse/core";
-import { api, initState } from "../plugins/api";
-import { components } from "../plugins/api/types";
+import { Machine } from "../helpers/types";
+import { api, useStateApi } from "../plugins/api";
 import CodeBlock from "./CodeBlock.vue";
 
-const { state } = useAsyncState(api().GET("/api/v1/machine"), initState);
+const { state, isLoading } = useStateApi(() => api().GET("/api/v1/machine"));
 
 const machines = computed(() => {
-  const nodes = state.value.data?.machines;
+  const nodes = <Machine[] | undefined>state.value?.machines;
 
   if (!nodes) {
     return [];
   }
 
-  return nodes as Array<Required<components["schemas"]["v1Machine"]>>;
+  return nodes;
 });
 </script>

@@ -10,7 +10,16 @@
 
     <div class="rounded-lg border border-gray-300 bg-white sm:rounded-2xl">
       <ul role="list" class="-my-5 divide-y divide-gray-200 p-6">
-        <li v-for="user in users" :key="user.id" class="py-4">
+        <li v-if="isLoading" class="animate-pulse">
+          <div class="flex min-h-20 items-center space-x-4">
+            <div class="min-w-0 flex-1">
+              <p class="h-4 rounded-full bg-gray-200"></p>
+              <p class="mt-2 h-4 rounded-full bg-gray-200"></p>
+            </div>
+          </div>
+        </li>
+
+        <li v-else v-for="user in users" :key="user.id" class="py-4">
           <div class="flex items-center space-x-4">
             <div class="min-w-0 flex-1">
               <p class="truncate text-sm font-medium text-gray-900">
@@ -40,22 +49,21 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { UserPlusIcon } from "@heroicons/vue/24/outline";
-import { useAsyncState } from "@vueuse/core";
-import { api, initState } from "../plugins/api";
-import { components } from "../plugins/api/types";
+import { User } from "../helpers/types";
+import { api, useStateApi } from "../plugins/api";
 import AppLayout from "./AppLayout.vue";
 import UserButtons from "./UserButtons.vue";
 
-const { state } = useAsyncState(api().GET("/api/v1/user"), initState);
+const { state, isLoading } = useStateApi(() => api().GET("/api/v1/user"));
 
 const users = computed(() => {
-  const users = state.value.data?.users;
+  const users = <User[] | undefined>state.value?.users;
 
   if (!users) {
     return [];
   }
 
-  return users as Array<Required<components["schemas"]["v1User"]>>;
+  return users;
 });
 
 const showPreAuthKeys = (id: string) =>
