@@ -5,6 +5,11 @@ import MachinesList from "../components/MachinesList.vue";
 import MachinesView from "../components/MachinesView.vue";
 import UsersView from "../components/UsersView.vue";
 
+const machineRoutes = [
+  { path: "", name: "Machines list", component: MachinesList },
+  { path: ":id", name: "Machine details", component: MachineDetail },
+];
+
 export const routes = [
   {
     path: "/",
@@ -15,17 +20,14 @@ export const routes = [
     path: "/machines",
     name: "Machines",
     component: MachinesView,
-    children: [
-      { path: "", name: "Machines list", component: MachinesList },
-      { path: ":name", name: "Machine details", component: MachineDetail },
-    ],
+    children: machineRoutes,
   },
   {
     path: "/users",
     name: "Users",
     component: UsersView,
   },
-];
+] as const;
 
 export type RouteName = (typeof routes)[number]["name"];
 

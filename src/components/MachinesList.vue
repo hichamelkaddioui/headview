@@ -75,7 +75,7 @@
                 </template>
               </div>
             </td>
-            <td class="p-6">{{ machine.user.name }}</td>
+            <td class="p-6">{{ machine.user?.name }}</td>
             <td class="p-6">
               <button
                 type="button"
@@ -83,7 +83,7 @@
                 @click="
                   $router.push({
                     name: 'Machine details',
-                    params: { name: machine.givenName },
+                    params: { id: machine.id },
                   })
                 "
               >
@@ -102,15 +102,24 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ArrowTopRightOnSquareIcon,
-  SquaresPlusIcon,
-} from "@heroicons/vue/24/outline";
+import { computed } from "vue";
+import { SquaresPlusIcon } from "@heroicons/vue/24/outline";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
-import { machineFactory } from "../helpers/data";
+import { useAsyncState } from "@vueuse/core";
+import { api, initState } from "../plugins/api";
+import { components } from "../plugins/api/types";
 import CodeBlock from "./CodeBlock.vue";
 
-const machines = [...new Array(10)]
-  .map((_, idx) => idx + 1)
-  .map(machineFactory);
+const { state } = useAsyncState(api().GET("/api/v1/node"), initState);
+
+const machines = computed(() => {
+  const nodes = state.value.data?.nodes;
+
+  if (!nodes) {
+    return [];
+  }
+
+  return nodes as Array<Required<components["schemas"]["v1Node"]>>;
+});
 </script>

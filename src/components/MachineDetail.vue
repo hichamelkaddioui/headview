@@ -9,6 +9,7 @@
   </div>
 
   <div
+    v-if="machine"
     class="overflow-hidden rounded-lg border border-gray-300 bg-white sm:rounded-2xl"
   >
     <div class="flex items-center justify-between px-4 py-5 sm:px-6">
@@ -234,6 +235,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import {
@@ -245,13 +247,34 @@ import {
   PencilSquareIcon,
 } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
-import { machineFactory } from "../helpers/data";
+import { useAsyncState } from "@vueuse/core";
+import { api, initState } from "../plugins/api";
+import { components } from "../plugins/api/types";
 import CodeBlock from "./CodeBlock.vue";
 
-const {
-  params: { name },
-} = useRoute();
-const givenName = name.toString();
-const machine = { ...machineFactory(3), givenName };
-const registerMethod = machine.registerMethod.replace("REGISTER_METHOD_", "");
+const { id } = useRoute().params;
+const params = { path: { nodeId: String(id) } };
+
+const { state } = useAsyncState(
+  api().GET("/api/v1/node/{nodeId}", { params }),
+  initState,
+);
+
+const machine = computed(() => {
+  const node = state.value.data?.node;
+
+  if (!node) {
+    return null;
+  }
+
+  return node as Required<components["schemas"]["v1Node"]>;
+});
+
+const registerMethod = computed(() => {
+  if (!machine.value) {
+    return "";
+  }
+
+  return machine.value.registerMethod.replace("REGISTER_METHOD_", "");
+});
 </script>
