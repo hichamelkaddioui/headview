@@ -115,9 +115,9 @@ import { computed } from "vue";
 import { SquaresPlusIcon } from "@heroicons/vue/24/outline";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
+import CodeBlock from "../components/CodeBlock.vue";
 import { Machine } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
-import CodeBlock from "./CodeBlock.vue";
 
 const { state, isLoading } = useStateApi(() => api().GET("/api/v1/machine"));
 

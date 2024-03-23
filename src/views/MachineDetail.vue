@@ -258,10 +258,10 @@ import {
   PencilSquareIcon,
 } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
+import CodeBlock from "../components/CodeBlock.vue";
+import MachineDetailModalRename from "../components/MachineDetailModalRename.vue";
 import { Machine } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
-import CodeBlock from "./CodeBlock.vue";
-import MachineDetailModalRename from "./MachineDetailModalRename.vue";
 
 // API state
 const { id } = useRoute().params;

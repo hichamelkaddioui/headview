@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
-import DashboardView from "../components/DashboardView.vue";
-import MachineDetail from "../components/MachineDetail.vue";
-import MachinesList from "../components/MachinesList.vue";
-import MachinesView from "../components/MachinesView.vue";
-import UsersView from "../components/UsersView.vue";
+import DashboardView from "../views/DashboardView.vue";
+import MachineDetail from "../views/MachineDetail.vue";
+import MachinesList from "../views/MachinesList.vue";
+import MachinesView from "../views/MachinesView.vue";
+import UsersView from "../views/UsersView.vue";
 
 const machineRoutes = [
   { path: "", name: "Machines list", component: MachinesList },

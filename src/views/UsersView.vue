@@ -49,10 +49,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { UserPlusIcon } from "@heroicons/vue/24/outline";
+import AppLayout from "../components/AppLayout.vue";
+import UserButtons from "../components/UserButtons.vue";
 import { User } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
-import AppLayout from "./AppLayout.vue";
-import UserButtons from "./UserButtons.vue";
 
 const { state, isLoading } = useStateApi(() => api().GET("/api/v1/user"));
 
