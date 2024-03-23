@@ -74,17 +74,22 @@ const emit = defineEmits(["close", "update"]);
 
 const newMachineName = ref("");
 
-const apiCall = computed(() => {
+const apiCallOptions = computed(() => {
   const machineId = props.machine.id;
   const newName = newMachineName.value;
   const params = { path: { machineId, newName } };
 
-  return () =>
-    api().POST("/api/v1/machine/{machineId}/rename/{newName}", { params });
+  return { params };
 });
 
+const apiCall = () =>
+  api().POST(
+    "/api/v1/machine/{machineId}/rename/{newName}",
+    apiCallOptions.value,
+  );
+
 const stateOptions = { immediate: false, onSuccess: () => emit("update") };
-const { execute, isLoading } = useStateApi(apiCall.value, stateOptions);
+const { execute, isLoading } = useStateApi(apiCall, stateOptions);
 
 const onRenameSubmit = () => execute();
 </script>
