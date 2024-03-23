@@ -253,21 +253,21 @@ import { components } from "../plugins/api/types";
 import CodeBlock from "./CodeBlock.vue";
 
 const { id } = useRoute().params;
-const params = { path: { nodeId: String(id) } };
+const params = { path: { machineId: String(id) } };
 
 const { state } = useAsyncState(
-  api().GET("/api/v1/node/{nodeId}", { params }),
+  api().GET("/api/v1/machine/{machineId}", { params }),
   initState,
 );
 
 const machine = computed(() => {
-  const node = state.value.data?.node;
+  const machine = state.value.data?.machine;
 
-  if (!node) {
+  if (!machine) {
     return null;
   }
 
-  return node as Required<components["schemas"]["v1Node"]>;
+  return machine as Required<components["schemas"]["v1Machine"]>;
 });
 
 const registerMethod = computed(() => {

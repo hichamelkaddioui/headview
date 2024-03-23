@@ -111,15 +111,15 @@ import { api, initState } from "../plugins/api";
 import { components } from "../plugins/api/types";
 import CodeBlock from "./CodeBlock.vue";
 
-const { state } = useAsyncState(api().GET("/api/v1/node"), initState);
+const { state } = useAsyncState(api().GET("/api/v1/machine"), initState);
 
 const machines = computed(() => {
-  const nodes = state.value.data?.nodes;
+  const nodes = state.value.data?.machines;
 
   if (!nodes) {
     return [];
   }
 
-  return nodes as Array<Required<components["schemas"]["v1Node"]>>;
+  return nodes as Array<Required<components["schemas"]["v1Machine"]>>;
 });
 </script>

@@ -3,7 +3,6 @@
  * Do not make direct changes to the file.
  */
 
-
 export interface paths {
   "/api/v1/apikey": {
     get: operations["HeadscaleService_ListApiKeys"];
@@ -13,34 +12,34 @@ export interface paths {
   "/api/v1/apikey/expire": {
     post: operations["HeadscaleService_ExpireApiKey"];
   };
-  "/api/v1/debug/node": {
-    /** --- Node start --- */
-    post: operations["HeadscaleService_DebugCreateNode"];
+  "/api/v1/debug/machine": {
+    /** --- Machine start --- */
+    post: operations["HeadscaleService_DebugCreateMachine"];
   };
-  "/api/v1/node": {
-    get: operations["HeadscaleService_ListNodes"];
+  "/api/v1/machine": {
+    get: operations["HeadscaleService_ListMachines"];
   };
-  "/api/v1/node/register": {
-    post: operations["HeadscaleService_RegisterNode"];
+  "/api/v1/machine/register": {
+    post: operations["HeadscaleService_RegisterMachine"];
   };
-  "/api/v1/node/{nodeId}": {
-    get: operations["HeadscaleService_GetNode"];
-    delete: operations["HeadscaleService_DeleteNode"];
+  "/api/v1/machine/{machineId}": {
+    get: operations["HeadscaleService_GetMachine"];
+    delete: operations["HeadscaleService_DeleteMachine"];
   };
-  "/api/v1/node/{nodeId}/expire": {
-    post: operations["HeadscaleService_ExpireNode"];
+  "/api/v1/machine/{machineId}/expire": {
+    post: operations["HeadscaleService_ExpireMachine"];
   };
-  "/api/v1/node/{nodeId}/rename/{newName}": {
-    post: operations["HeadscaleService_RenameNode"];
+  "/api/v1/machine/{machineId}/rename/{newName}": {
+    post: operations["HeadscaleService_RenameMachine"];
   };
-  "/api/v1/node/{nodeId}/routes": {
-    get: operations["HeadscaleService_GetNodeRoutes"];
+  "/api/v1/machine/{machineId}/routes": {
+    get: operations["HeadscaleService_GetMachineRoutes"];
   };
-  "/api/v1/node/{nodeId}/tags": {
+  "/api/v1/machine/{machineId}/tags": {
     post: operations["HeadscaleService_SetTags"];
   };
-  "/api/v1/node/{nodeId}/user": {
-    post: operations["HeadscaleService_MoveNode"];
+  "/api/v1/machine/{machineId}/user": {
+    post: operations["HeadscaleService_MoveMachine"];
   };
   "/api/v1/preauthkey": {
     get: operations["HeadscaleService_ListPreAuthKeys"];
@@ -126,16 +125,16 @@ export interface components {
     v1CreateUserResponse: {
       user?: components["schemas"]["v1User"];
     };
-    v1DebugCreateNodeRequest: {
+    v1DebugCreateMachineRequest: {
       user?: string;
       key?: string;
       name?: string;
       routes?: string[];
     };
-    v1DebugCreateNodeResponse: {
-      node?: components["schemas"]["v1Node"];
+    v1DebugCreateMachineResponse: {
+      machine?: components["schemas"]["v1Machine"];
     };
-    v1DeleteNodeResponse: Record<string, never>;
+    v1DeleteMachineResponse: Record<string, never>;
     v1DeleteRouteResponse: Record<string, never>;
     v1DeleteUserResponse: Record<string, never>;
     v1DisableRouteResponse: Record<string, never>;
@@ -144,18 +143,18 @@ export interface components {
       prefix?: string;
     };
     v1ExpireApiKeyResponse: Record<string, never>;
-    v1ExpireNodeResponse: {
-      node?: components["schemas"]["v1Node"];
+    v1ExpireMachineResponse: {
+      machine?: components["schemas"]["v1Machine"];
     };
     v1ExpirePreAuthKeyRequest: {
       user?: string;
       key?: string;
     };
     v1ExpirePreAuthKeyResponse: Record<string, never>;
-    v1GetNodeResponse: {
-      node?: components["schemas"]["v1Node"];
+    v1GetMachineResponse: {
+      machine?: components["schemas"]["v1Machine"];
     };
-    v1GetNodeRoutesResponse: {
+    v1GetMachineRoutesResponse: {
       routes?: components["schemas"]["v1Route"][];
     };
     v1GetRoutesResponse: {
@@ -167,8 +166,8 @@ export interface components {
     v1ListApiKeysResponse: {
       apiKeys?: components["schemas"]["v1ApiKey"][];
     };
-    v1ListNodesResponse: {
-      nodes?: components["schemas"]["v1Node"][];
+    v1ListMachinesResponse: {
+      machines?: components["schemas"]["v1Machine"][];
     };
     v1ListPreAuthKeysResponse: {
       preAuthKeys?: components["schemas"]["v1PreAuthKey"][];
@@ -176,10 +175,7 @@ export interface components {
     v1ListUsersResponse: {
       users?: components["schemas"]["v1User"][];
     };
-    v1MoveNodeResponse: {
-      node?: components["schemas"]["v1Node"];
-    };
-    v1Node: {
+    v1Machine: {
       /** Format: uint64 */
       id?: string;
       machineKey?: string;
@@ -204,6 +200,9 @@ export interface components {
       givenName?: string;
       online?: boolean;
     };
+    v1MoveMachineResponse: {
+      machine?: components["schemas"]["v1Machine"];
+    };
     v1PreAuthKey: {
       user?: string;
       id?: string;
@@ -217,16 +216,20 @@ export interface components {
       createdAt?: string;
       aclTags?: string[];
     };
+    v1RegisterMachineResponse: {
+      machine?: components["schemas"]["v1Machine"];
+    };
     /**
      * @default REGISTER_METHOD_UNSPECIFIED
      * @enum {string}
      */
-    v1RegisterMethod: "REGISTER_METHOD_UNSPECIFIED" | "REGISTER_METHOD_AUTH_KEY" | "REGISTER_METHOD_CLI" | "REGISTER_METHOD_OIDC";
-    v1RegisterNodeResponse: {
-      node?: components["schemas"]["v1Node"];
-    };
-    v1RenameNodeResponse: {
-      node?: components["schemas"]["v1Node"];
+    v1RegisterMethod:
+      | "REGISTER_METHOD_UNSPECIFIED"
+      | "REGISTER_METHOD_AUTH_KEY"
+      | "REGISTER_METHOD_CLI"
+      | "REGISTER_METHOD_OIDC";
+    v1RenameMachineResponse: {
+      machine?: components["schemas"]["v1Machine"];
     };
     v1RenameUserResponse: {
       user?: components["schemas"]["v1User"];
@@ -234,7 +237,7 @@ export interface components {
     v1Route: {
       /** Format: uint64 */
       id?: string;
-      node?: components["schemas"]["v1Node"];
+      machine?: components["schemas"]["v1Machine"];
       prefix?: string;
       advertised?: boolean;
       enabled?: boolean;
@@ -247,7 +250,7 @@ export interface components {
       deletedAt?: string;
     };
     v1SetTagsResponse: {
-      node?: components["schemas"]["v1Node"];
+      machine?: components["schemas"]["v1Machine"];
     };
     v1User: {
       id?: string;
@@ -268,7 +271,6 @@ export type $defs = Record<string, never>;
 export type external = Record<string, never>;
 
 export interface operations {
-
   HeadscaleService_ListApiKeys: {
     responses: {
       /** @description A successful response. */
@@ -328,18 +330,18 @@ export interface operations {
       };
     };
   };
-  /** --- Node start --- */
-  HeadscaleService_DebugCreateNode: {
+  /** --- Machine start --- */
+  HeadscaleService_DebugCreateMachine: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["v1DebugCreateNodeRequest"];
+        "application/json": components["schemas"]["v1DebugCreateMachineRequest"];
       };
     };
     responses: {
       /** @description A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1DebugCreateNodeResponse"];
+          "application/json": components["schemas"]["v1DebugCreateMachineResponse"];
         };
       };
       /** @description An unexpected error response. */
@@ -350,7 +352,7 @@ export interface operations {
       };
     };
   };
-  HeadscaleService_ListNodes: {
+  HeadscaleService_ListMachines: {
     parameters: {
       query?: {
         user?: string;
@@ -360,7 +362,7 @@ export interface operations {
       /** @description A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1ListNodesResponse"];
+          "application/json": components["schemas"]["v1ListMachinesResponse"];
         };
       };
       /** @description An unexpected error response. */
@@ -371,7 +373,7 @@ export interface operations {
       };
     };
   };
-  HeadscaleService_RegisterNode: {
+  HeadscaleService_RegisterMachine: {
     parameters: {
       query?: {
         user?: string;
@@ -382,7 +384,7 @@ export interface operations {
       /** @description A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1RegisterNodeResponse"];
+          "application/json": components["schemas"]["v1RegisterMachineResponse"];
         };
       };
       /** @description An unexpected error response. */
@@ -393,17 +395,17 @@ export interface operations {
       };
     };
   };
-  HeadscaleService_GetNode: {
+  HeadscaleService_GetMachine: {
     parameters: {
       path: {
-        nodeId: string;
+        machineId: string;
       };
     };
     responses: {
       /** @description A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1GetNodeResponse"];
+          "application/json": components["schemas"]["v1GetMachineResponse"];
         };
       };
       /** @description An unexpected error response. */
@@ -414,17 +416,17 @@ export interface operations {
       };
     };
   };
-  HeadscaleService_DeleteNode: {
+  HeadscaleService_DeleteMachine: {
     parameters: {
       path: {
-        nodeId: string;
+        machineId: string;
       };
     };
     responses: {
       /** @description A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1DeleteNodeResponse"];
+          "application/json": components["schemas"]["v1DeleteMachineResponse"];
         };
       };
       /** @description An unexpected error response. */
@@ -435,17 +437,17 @@ export interface operations {
       };
     };
   };
-  HeadscaleService_ExpireNode: {
+  HeadscaleService_ExpireMachine: {
     parameters: {
       path: {
-        nodeId: string;
+        machineId: string;
       };
     };
     responses: {
       /** @description A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1ExpireNodeResponse"];
+          "application/json": components["schemas"]["v1ExpireMachineResponse"];
         };
       };
       /** @description An unexpected error response. */
@@ -456,10 +458,10 @@ export interface operations {
       };
     };
   };
-  HeadscaleService_RenameNode: {
+  HeadscaleService_RenameMachine: {
     parameters: {
       path: {
-        nodeId: string;
+        machineId: string;
         newName: string;
       };
     };
@@ -467,7 +469,7 @@ export interface operations {
       /** @description A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1RenameNodeResponse"];
+          "application/json": components["schemas"]["v1RenameMachineResponse"];
         };
       };
       /** @description An unexpected error response. */
@@ -478,17 +480,17 @@ export interface operations {
       };
     };
   };
-  HeadscaleService_GetNodeRoutes: {
+  HeadscaleService_GetMachineRoutes: {
     parameters: {
       path: {
-        nodeId: string;
+        machineId: string;
       };
     };
     responses: {
       /** @description A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1GetNodeRoutesResponse"];
+          "application/json": components["schemas"]["v1GetMachineRoutesResponse"];
         };
       };
       /** @description An unexpected error response. */
@@ -502,7 +504,7 @@ export interface operations {
   HeadscaleService_SetTags: {
     parameters: {
       path: {
-        nodeId: string;
+        machineId: string;
       };
     };
     requestBody: {
@@ -527,20 +529,20 @@ export interface operations {
       };
     };
   };
-  HeadscaleService_MoveNode: {
+  HeadscaleService_MoveMachine: {
     parameters: {
       query?: {
         user?: string;
       };
       path: {
-        nodeId: string;
+        machineId: string;
       };
     };
     responses: {
       /** @description A successful response. */
       200: {
         content: {
-          "application/json": components["schemas"]["v1MoveNodeResponse"];
+          "application/json": components["schemas"]["v1MoveMachineResponse"];
         };
       };
       /** @description An unexpected error response. */
