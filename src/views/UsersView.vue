@@ -32,7 +32,7 @@
           <div>
             <UserButtons
               :key="user.id"
-              @keys="showPreAuthKeys(user.id)"
+              @keys="onShowPreAuthKeys(user.name)"
               @rename="renameUser(user.id)"
               @create-key="createPreAuthKey(user.id)"
               @delete="deleteUser(user.id)"
@@ -42,16 +42,25 @@
       </li>
     </ul>
   </div>
+
+  <PreAuthKeysModalView
+    :open="showPreAuthKeysModal"
+    :user="preAuthKeysModalUser"
+    @close="showPreAuthKeysModal = false"
+  />
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { UserPlusIcon } from "@heroicons/vue/24/outline";
+import PreAuthKeysModalView from "../components/PreAuthKeysModalView.vue";
 import UserButtons from "../components/UserButtons.vue";
 import { User } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
 
 const { state, isLoading } = useStateApi(() => api().GET("/api/v1/user"));
+const showPreAuthKeysModal = ref(false);
+const preAuthKeysModalUser = ref("");
 
 const users = computed(() => {
   const users = <User[] | undefined>state.value?.users;
@@ -63,8 +72,11 @@ const users = computed(() => {
   return users;
 });
 
-const showPreAuthKeys = (id: string) =>
-  console.log(`Pre auth keys for user ${id}`);
+const onShowPreAuthKeys = async (user: string) => {
+  preAuthKeysModalUser.value = user;
+  showPreAuthKeysModal.value = true;
+};
+
 const renameUser = (id: string) => console.log(`Rename for user ${id}`);
 const createPreAuthKey = (id: string) =>
   console.log(`Create key for user ${id}`);

@@ -48,22 +48,6 @@
                 Rename user
               </a>
             </MenuItem>
-            <MenuItem v-slot="{ active }">
-              <a
-                href="#"
-                :class="[
-                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                  'group flex items-center px-4 py-2 text-sm',
-                ]"
-                @click="$emit('create-key')"
-              >
-                <KeyIcon
-                  class="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-600"
-                  aria-hidden="true"
-                />
-                New pre auth key
-              </a>
-            </MenuItem>
           </div>
           <div class="py-1">
             <MenuItem v-slot="{ active }">
