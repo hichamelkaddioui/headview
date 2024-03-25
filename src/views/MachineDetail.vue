@@ -207,13 +207,13 @@
                         active ? 'bg-gray-100 text-red-600' : 'text-red-500',
                         'group flex items-center px-4 py-2 text-sm font-medium',
                       ]"
-                      @click="$emit('delete')"
+                      @click="modalDeleteOpen = true"
                     >
                       <TrashIcon
                         class="mr-3 h-5 w-5 text-red-500 group-hover:text-red-600"
                         aria-hidden="true"
                       />
-                      Delete user
+                      Delete machine
                     </a>
                   </MenuItem>
                 </div>
@@ -347,6 +347,13 @@
       @update="onModalRenameUpdate"
       @close="modalRenameOpen = false"
     />
+
+    <MachineModalDelete
+      :open="modalDeleteOpen"
+      :machine="machine"
+      @delete="$router.push({ name: 'Machines list' })"
+      @close="modalDeleteOpen = false"
+    />
   </template>
 </template>
 
@@ -364,6 +371,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
 import CodeBlock from "../components/CodeBlock.vue";
+import MachineModalDelete from "../components/MachineModalDelete.vue";
 import MachineModalRename from "../components/MachineModalRename.vue";
 import { Machine } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
