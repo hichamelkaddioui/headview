@@ -341,7 +341,7 @@
       </div>
     </div>
 
-    <MachineDetailModalRename
+    <MachineModalRename
       :open="modalRenameOpen"
       :machine="machine"
       @update="onModalRenameUpdate"
@@ -364,7 +364,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
 import CodeBlock from "../components/CodeBlock.vue";
-import MachineDetailModalRename from "../components/MachineDetailModalRename.vue";
+import MachineModalRename from "../components/MachineModalRename.vue";
 import { Machine } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
 
@@ -377,6 +377,7 @@ const { state, execute, isLoading } = useStateApi(apiCall, {
 });
 
 // Modals
+const modalDeleteOpen = ref(false);
 const modalRenameOpen = ref(false);
 const onModalRenameUpdate = () => {
   execute();
