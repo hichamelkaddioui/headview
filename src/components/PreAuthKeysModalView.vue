@@ -33,6 +33,9 @@
                 class="block w-full rounded-lg border-gray-300 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 v-model="createPreAuthKeyModel.expiration"
               />
+              <p class="mt-2 text-sm text-gray-500">
+                Date at which the key expires
+              </p>
             </div>
           </div>
 
@@ -51,7 +54,7 @@
                 Reusable
               </label>
               <p class="text-gray-500">
-                The key can be used to authenticate multiple machines
+                Use this key to authenticate more than one device
               </p>
             </div>
           </div>
@@ -69,7 +72,10 @@
               <label for="ephemeral" class="font-medium text-gray-900">
                 Ephemeral
               </label>
-              <p class="text-gray-500">The key can be only be used once</p>
+              <p class="text-gray-500">
+                Devices authenticated by this key will be automatically removed
+                after going offline
+              </p>
             </div>
           </div>
         </div>
@@ -260,7 +266,9 @@ const props = defineProps<{ open: boolean; user: string }>();
 const createPreAuthKeyModel = ref({
   reusable: true,
   ephemeral: false,
-  expiration: null,
+  expiration: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split("T")[0],
 });
 const onlyShowUsable = ref(false);
 
