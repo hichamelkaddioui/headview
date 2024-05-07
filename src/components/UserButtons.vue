@@ -82,5 +82,5 @@ import {
   TrashIcon,
 } from "@heroicons/vue/24/outline";
 
-defineEmits(["keys", "rename", "create-key", "delete"]);
+defineEmits(["keys", "rename", "delete"]);
 </script>

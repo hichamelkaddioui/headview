@@ -33,8 +33,7 @@
             <UserButtons
               :key="user.id"
               @keys="onShowPreAuthKeys(user.name)"
-              @rename="renameUser(user.id)"
-              @create-key="createPreAuthKey(user.id)"
+              @rename="onShowRenameModal(user.name)"
               @delete="deleteUser(user.id)"
             />
           </div>
@@ -44,9 +43,16 @@
   </div>
 
   <PreAuthKeysModalView
-    :open="showPreAuthKeysModal"
+    :open="preAuthKeysModalOpen"
     :user="preAuthKeysModalUser"
-    @close="showPreAuthKeysModal = false"
+    @close="preAuthKeysModalOpen = false"
+  />
+
+  <UserModalRename
+    :open="modalRenameOpen"
+    :name="userToRename"
+    @update="onModalRenameUpdate"
+    @close="modalRenameOpen = false"
   />
 </template>
 
@@ -55,12 +61,23 @@ import { computed, ref } from "vue";
 import { UserPlusIcon } from "@heroicons/vue/24/outline";
 import PreAuthKeysModalView from "../components/PreAuthKeysModalView.vue";
 import UserButtons from "../components/UserButtons.vue";
+import UserModalRename from "../components/UserModalRename.vue";
 import { User } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
 
-const { state, isLoading } = useStateApi(() => api().GET("/api/v1/user"));
-const showPreAuthKeysModal = ref(false);
+const { state, isLoading, execute } = useStateApi(
+  () => api().GET("/api/v1/user"),
+  { resetOnExecute: false },
+);
+const preAuthKeysModalOpen = ref(false);
 const preAuthKeysModalUser = ref("");
+const modalRenameOpen = ref(false);
+const userToRename = ref("");
+
+const onModalRenameUpdate = () => {
+  execute();
+  modalRenameOpen.value = false;
+};
 
 const users = computed(() => {
   const users = <User[] | undefined>state.value?.users;
@@ -74,11 +91,13 @@ const users = computed(() => {
 
 const onShowPreAuthKeys = async (user: string) => {
   preAuthKeysModalUser.value = user;
-  showPreAuthKeysModal.value = true;
+  preAuthKeysModalOpen.value = true;
 };
 
-const renameUser = (id: string) => console.log(`Rename for user ${id}`);
-const createPreAuthKey = (id: string) =>
-  console.log(`Create key for user ${id}`);
+const onShowRenameModal = (name: string) => {
+  userToRename.value = name;
+  modalRenameOpen.value = true;
+};
+
 const deleteUser = (id: string) => console.log(`Delete user ${id}`);
 </script>
