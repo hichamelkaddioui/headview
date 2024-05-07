@@ -88,6 +88,14 @@
       Pre-authentication keys list
     </h3>
 
+    <div class="my-4">
+      <SwitchButton v-model="onlyShowUsable">
+        <span class="text-sm font-medium text-gray-900">
+          Only show usable keys
+        </span>
+      </SwitchButton>
+    </div>
+
     <div
       class="overflow-hidden rounded-xl border border-gray-300 bg-white ring-1 ring-black ring-opacity-5 sm:rounded-2xl"
     >
@@ -109,7 +117,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-if="isLoading" class="">
+            <tr v-if="isLoading" class="animate-pulse">
               <th
                 scope="row"
                 class="p-6 font-normal text-gray-900 dark:text-white"
@@ -122,6 +130,9 @@
               <td class="px-3"><p class="h-4 rounded-full bg-gray-200"></p></td>
               <td class="px-3"><p class="h-4 rounded-full bg-gray-200"></p></td>
               <td class="px-3"><p class="h-4 rounded-full bg-gray-200"></p></td>
+            </tr>
+            <tr v-else-if="enrichedKeys.length === 0">
+              <td colspan="7" class="p-6 text-center">No keys to show</td>
             </tr>
             <tr
               v-for="key in enrichedKeys"
@@ -148,6 +159,12 @@
                 >
                   Expired
                 </span>
+                <span
+                  v-else-if="key.used && !key.reusable"
+                  class="me-2 rounded-lg border border-gray-300 bg-white px-2.5 py-1 text-gray-800"
+                >
+                  Not expired
+                </span>
                 <button
                   v-else
                   type="button"
@@ -163,6 +180,12 @@
                   class="me-2 rounded-lg border border-green-400 bg-green-100 px-2.5 py-1 text-green-800"
                 >
                   Not used
+                </span>
+                <span
+                  v-else-if="!key.ephemeral"
+                  class="me-2 rounded-lg border border-yellow-400 bg-yellow-100 px-2.5 py-1 text-gray-800"
+                >
+                  Used
                 </span>
                 <span
                   v-else
@@ -231,6 +254,7 @@ import { UseClipboard } from "@vueuse/components";
 import { PreAuthKey } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
 import ModalView from "./ModalView.vue";
+import SwitchButton from "./SwitchButton.vue";
 
 const props = defineProps<{ open: boolean; user: string }>();
 const createPreAuthKeyModel = ref({
@@ -238,6 +262,7 @@ const createPreAuthKeyModel = ref({
   ephemeral: false,
   expiration: null,
 });
+const onlyShowUsable = ref(false);
 
 const fetchApiCall = () =>
   api().GET("/api/v1/preauthkey", {
@@ -284,6 +309,16 @@ const enrichedKeys = computed(() =>
           const expired = +expiration - +new Date() < 0;
 
           return { ...key, expired };
+        })
+        .filter(({ used, reusable, expired }) => {
+          // Show all keys
+          if (!onlyShowUsable.value) return true;
+
+          // Hide expired keys and keys that cannot be used again
+          if (expired) return false;
+          if (used && !reusable) return false;
+
+          return true;
         })
     : [],
 );
