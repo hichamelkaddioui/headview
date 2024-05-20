@@ -2,6 +2,7 @@
   <button
     type="button"
     class="my-12 inline-flex items-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+    @click="modalCreateOpen = true"
   >
     <UserPlusIcon class="-ml-1 mr-2 h-6 w-6" aria-hidden="true" />
     Create new user
@@ -34,7 +35,7 @@
               :key="user.id"
               @keys="onShowPreAuthKeys(user.name)"
               @rename="onShowRenameModal(user.name)"
-              @delete="deleteUser(user.id)"
+              @delete="onShowDeleteModal(user.name)"
             />
           </div>
         </div>
@@ -48,11 +49,24 @@
     @close="preAuthKeysModalOpen = false"
   />
 
+  <UserModalCreate
+    :open="modalCreateOpen"
+    @create="onModalCreated"
+    @close="modalCreateOpen = false"
+  />
+
   <UserModalRename
     :open="modalRenameOpen"
     :name="userToRename"
-    @update="onModalRenameUpdate"
+    @update="onModalRenamed"
     @close="modalRenameOpen = false"
+  />
+
+  <UserModalDelete
+    :open="modalDeleteOpen"
+    :user="userToDelete"
+    @delete="onModalDeleted"
+    @close="modalDeleteOpen = false"
   />
 </template>
 
@@ -61,6 +75,8 @@ import { computed, ref } from "vue";
 import { UserPlusIcon } from "@heroicons/vue/24/outline";
 import PreAuthKeysModalView from "../components/PreAuthKeysModalView.vue";
 import UserButtons from "../components/UserButtons.vue";
+import UserModalCreate from "../components/UserModalCreate.vue";
+import UserModalDelete from "../components/UserModalDelete.vue";
 import UserModalRename from "../components/UserModalRename.vue";
 import { User } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
@@ -71,13 +87,11 @@ const { state, isLoading, execute } = useStateApi(
 );
 const preAuthKeysModalOpen = ref(false);
 const preAuthKeysModalUser = ref("");
+const modalCreateOpen = ref(false);
 const modalRenameOpen = ref(false);
 const userToRename = ref("");
-
-const onModalRenameUpdate = () => {
-  execute();
-  modalRenameOpen.value = false;
-};
+const modalDeleteOpen = ref(false);
+const userToDelete = ref("");
 
 const users = computed(() => {
   const users = <User[] | undefined>state.value?.users;
@@ -89,6 +103,21 @@ const users = computed(() => {
   return users;
 });
 
+const onModalCreated = () => {
+  execute();
+  modalCreateOpen.value = false;
+};
+
+const onModalRenamed = () => {
+  execute();
+  modalRenameOpen.value = false;
+};
+
+const onModalDeleted = () => {
+  execute();
+  modalDeleteOpen.value = false;
+};
+
 const onShowPreAuthKeys = async (user: string) => {
   preAuthKeysModalUser.value = user;
   preAuthKeysModalOpen.value = true;
@@ -99,5 +128,8 @@ const onShowRenameModal = (name: string) => {
   modalRenameOpen.value = true;
 };
 
-const deleteUser = (id: string) => console.log(`Delete user ${id}`);
+const onShowDeleteModal = (name: string) => {
+  userToDelete.value = name;
+  modalDeleteOpen.value = true;
+};
 </script>
