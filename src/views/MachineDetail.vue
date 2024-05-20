@@ -43,7 +43,7 @@
             <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               <ul
                 role="list"
-                class="divide-y divide-gray-200 rounded-md border border-gray-200"
+                class="divide-y divide-gray-200 rounded-lg border border-gray-200"
               >
                 <li
                   class="flex items-center justify-between overflow-x-auto py-3 pl-3 pr-4 text-sm"
@@ -163,7 +163,7 @@
               leave-to-class="transform opacity-0 scale-95"
             >
               <MenuItems
-                class="absolute right-0 z-30 mt-2 w-56 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-sm ring-1 ring-black ring-opacity-20 focus:outline-none"
+                class="absolute right-0 z-30 mt-2 w-56 origin-top-right divide-y divide-gray-200 rounded-lg bg-white shadow-sm ring-1 ring-black ring-opacity-20 focus:outline-none"
               >
                 <div class="py-1">
                   <MenuItem v-slot="{ active }">
@@ -247,7 +247,7 @@
             <dd class="mt-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               <ul
                 role="list"
-                class="divide-y divide-gray-200 rounded-md border border-gray-200"
+                class="divide-y divide-gray-200 rounded-lg border border-gray-200"
               >
                 <li
                   v-for="ip in machine.ipAddresses.sort(
