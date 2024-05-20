@@ -392,6 +392,8 @@ const onModalRenameUpdate = () => {
   modalRenameOpen.value = false;
 };
 
+apiCall;
+
 const machine = computed(() => {
   const machine = <Machine | undefined>state.value?.machine;
 

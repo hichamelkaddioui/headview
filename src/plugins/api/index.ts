@@ -13,13 +13,9 @@ export const api = () => {
   return createClient<paths>(options);
 };
 
-export const initState = {
-  data: {},
-  error: undefined,
-  response: new Response(),
-};
-
-type ApiCall<T> = () => Promise<FetchResponse<T, undefined>>;
+type ApiCall<T> = () => Promise<
+  FetchResponse<T, undefined, `${string}/${string}`>
+>;
 type Operation = operations[keyof operations];
 
 export const useStateApi = <K = Operation>(
@@ -34,11 +30,7 @@ export const useStateApi = <K = Operation>(
         throw error;
       }
 
-      if (!data) {
-        return null;
-      }
-
-      return data as Required<typeof data>;
+      return data ?? null;
     },
     undefined,
     options,
