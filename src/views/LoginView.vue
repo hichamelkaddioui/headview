@@ -8,19 +8,7 @@
     </div>
 
     <div class="mt-16 px-4 sm:mx-auto sm:w-full sm:max-w-xl">
-      <div v-if="loginError" class="mb-10 rounded-lg bg-red-50 p-4">
-        <div class="flex">
-          <div class="flex-shrink-0">
-            <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
-          </div>
-          <div class="ml-3">
-            <h3 class="text-sm font-medium text-red-800">That didn't work</h3>
-            <div class="mt-2 text-sm text-red-700">
-              <pre class="whitespace-normal">{{ loginError }}</pre>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ErrorView v-if="loginError" :error="loginError" />
 
       <div class="rounded-lg border bg-white px-4 py-8 sm:rounded-2xl sm:px-10">
         <form class="space-y-6" action="#" @submit.prevent="login">
@@ -83,8 +71,9 @@
 import createClient from "openapi-fetch";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
-import { ArrowPathIcon, XCircleIcon } from "@heroicons/vue/24/outline";
+import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 import { useAsyncState } from "@vueuse/core";
+import ErrorView from "../components/ErrorView.vue";
 import { paths } from "../plugins/api/types";
 import router from "../plugins/router";
 import { useAuthStore } from "../store/auth";
