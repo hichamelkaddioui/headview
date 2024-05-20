@@ -1,6 +1,7 @@
 import { RouteRecordRaw, createRouter, createWebHistory } from "vue-router";
 import DashboardView from "../views/DashboardView.vue";
 import HomeView from "../views/HomeView.vue";
+import LoginView from "../views/LoginView.vue";
 import MachineDetail from "../views/MachineDetail.vue";
 import MachinesList from "../views/MachinesList.vue";
 import UsersView from "../views/UsersView.vue";
@@ -38,6 +39,11 @@ export const routes: RouteRecordRaw[] = [
         component: UsersView,
       },
     ],
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: LoginView,
   },
 ];
 

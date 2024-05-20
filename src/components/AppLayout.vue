@@ -54,6 +54,8 @@
               <div class="h-0 flex-1 overflow-y-auto pb-4 pt-5">
                 <AppSidebar />
               </div>
+
+              <AppSidebarLogout />
             </DialogPanel>
           </TransitionChild>
           <div class="w-14 flex-shrink-0">
@@ -69,8 +71,10 @@
       <div
         class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white"
       >
-        <div class="flex flex-1 flex-col overflow-y-auto pb-4 pt-5">
+        <div class="flex flex-1 flex-col overflow-y-auto pt-5">
           <AppSidebar />
+
+          <AppSidebarLogout />
         </div>
       </div>
     </div>
@@ -115,6 +119,7 @@ import {
 } from "@headlessui/vue";
 import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
 import AppSidebar from "./AppSidebar.vue";
+import AppSidebarLogout from "./AppSidebarLogout.vue";
 
 const sidebarOpen = ref(false);
 </script>
