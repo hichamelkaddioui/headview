@@ -40,7 +40,7 @@
         type="button"
         class="inline-flex w-full justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500 sm:col-start-2 sm:text-sm"
         @click="onRenameSubmit"
-        :disabled="isLoading"
+        :disabled="isEmpty || isLoading"
       >
         <ArrowPathIcon
           v-if="isLoading"
@@ -85,5 +85,6 @@ const apiCall = () =>
 const stateOptions = { immediate: false, onSuccess: () => emit("update") };
 const { execute, isLoading } = useStateApi(apiCall, stateOptions);
 
-const onRenameSubmit = () => execute();
+const onRenameSubmit = () => !isEmpty.value && execute();
+const isEmpty = computed(() => newUserName.value.length === 0);
 </script>

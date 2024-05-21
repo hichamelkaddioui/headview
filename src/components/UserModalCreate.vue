@@ -38,7 +38,7 @@
         type="button"
         class="inline-flex w-full justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500 sm:col-start-2 sm:text-sm"
         @click="onCreateSubmit"
-        :disabled="isLoading"
+        :disabled="isEmpty || isLoading"
       >
         <ArrowPathIcon
           v-if="isLoading"
@@ -82,8 +82,9 @@ const apiCall = () => api().POST("/api/v1/user", apiCallOptions.value);
 const stateOptions = { immediate: false, onSuccess: () => emit("create") };
 const { execute, isLoading, error } = useStateApi(apiCall, stateOptions);
 
-const onCreateSubmit = () => execute();
+const onCreateSubmit = () => !isEmpty.value && execute();
 
+const isEmpty = computed(() => username.value.length === 0);
 const errorMessage = computed(() => {
   return (error.value as { message: string })?.message;
 });
