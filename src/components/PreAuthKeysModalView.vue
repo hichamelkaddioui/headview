@@ -188,14 +188,14 @@
                   Not used
                 </span>
                 <span
+                  class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-gray-800 dark:border-gray-500 dark:bg-slate-600 dark:text-slate-100"
                   v-else-if="!key.ephemeral"
-                  class="me-2 rounded-lg border border-yellow-400 bg-yellow-100 px-2.5 py-1 text-yellow-800 dark:border-yellow-700 dark:bg-yellow-900 dark:text-yellow-200"
                 >
                   Used
                 </span>
                 <span
                   v-else
-                  class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-gray-800 dark:border-gray-500 dark:bg-slate-600 dark:text-slate-100"
+                  class="me-2 rounded-lg border border-yellow-400 bg-yellow-100 px-2.5 py-1 text-yellow-800 dark:border-yellow-700 dark:bg-yellow-900 dark:text-yellow-200"
                 >
                   Used
                 </span>
