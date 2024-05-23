@@ -146,11 +146,15 @@
               :key="key.id"
               class="border-b bg-white last:border-none hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-800 dark:hover:bg-slate-700/80"
             >
-              <th scope="row" class="px-3 py-6 font-normal dark:text-white">
+              <th
+                scope="row"
+                class="px-3 py-6 font-normal dark:text-white"
+                title="Click to copy"
+              >
                 <UseClipboard v-slot="{ copy, copied }" :source="key.key">
                   <span
                     @click="copy()"
-                    class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-gray-800 dark:border-gray-500 dark:bg-slate-600 dark:text-slate-100"
+                    class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-gray-800 hover:cursor-pointer dark:border-gray-500 dark:bg-slate-600 dark:text-slate-100"
                   >
                     <code>{{ copied ? "Copied!" : key.key }}</code>
                   </span>
