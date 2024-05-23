@@ -8,7 +8,7 @@
     </div>
 
     <div class="mt-16 px-4 sm:mx-auto sm:w-full sm:max-w-xl">
-      <ErrorView v-if="loginError" :error="loginError" />
+      <ErrorView v-if="loginError" :error="loginError" class="mb-10" />
 
       <div
         class="rounded-lg border bg-white px-4 py-8 sm:rounded-2xl sm:px-10 dark:border-gray-700 dark:bg-slate-900"
