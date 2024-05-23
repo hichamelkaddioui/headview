@@ -10,9 +10,7 @@
     <div class="mt-16 px-4 sm:mx-auto sm:w-full sm:max-w-xl">
       <ErrorView v-if="loginError" :error="loginError" class="mb-10" />
 
-      <div
-        class="rounded-lg border bg-white px-4 py-8 sm:rounded-2xl sm:px-10 dark:border-gray-700 dark:bg-slate-900"
-      >
+      <CardView>
         <form class="space-y-6" action="#" @submit.prevent="login">
           <div>
             <label for="serverUrl" class="block text-sm font-medium">
@@ -61,7 +59,7 @@
             </button>
           </div>
         </form>
-      </div>
+      </CardView>
     </div>
   </div>
 </template>
@@ -72,6 +70,7 @@ import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 import { useAsyncState } from "@vueuse/core";
+import CardView from "../components/CardView.vue";
 import ErrorView from "../components/ErrorView.vue";
 import { paths } from "../plugins/api/types";
 import router from "../plugins/router";

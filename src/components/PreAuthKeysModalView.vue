@@ -16,9 +16,7 @@
       Create pre-authentication key
     </h3>
 
-    <div
-      class="rounded-lg border border-gray-300 bg-white p-6 sm:rounded-2xl dark:border-gray-700 dark:bg-slate-900"
-    >
+    <CardView>
       <form @submit.prevent="() => createKey()">
         <div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
           <div class="relative items-start">
@@ -84,7 +82,7 @@
           Create key
         </button>
       </form>
-    </div>
+    </CardView>
 
     <h3 class="mb-6 mt-12 text-lg font-medium leading-6">
       Pre-authentication keys list
@@ -259,6 +257,7 @@ import { KeyIcon } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
 import { PreAuthKey } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
+import CardView from "./CardView.vue";
 import ModalView from "./ModalView.vue";
 import SwitchButton from "./SwitchButton.vue";
 
