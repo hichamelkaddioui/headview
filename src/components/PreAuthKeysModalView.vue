@@ -255,7 +255,7 @@
 import { computed, ref } from "vue";
 import { KeyIcon } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
-import { PreAuthKey } from "../helpers/types";
+import { enrichKeys } from "../helpers/keys";
 import { api, useStateApi } from "../plugins/api";
 import CardView from "./CardView.vue";
 import ModalView from "./ModalView.vue";
@@ -309,15 +309,8 @@ const expirePreAuthKey = async (user: string, key: string) => {
 
 const enrichedKeys = computed(() =>
   state.value?.preAuthKeys
-    ? state.value.preAuthKeys
-        .filter((key): key is Required<PreAuthKey> => !!key)
-        .map((key) => {
-          const expiration = new Date(key.expiration);
-          const expired = +expiration - +new Date() < 0;
-
-          return { ...key, expired };
-        })
-        .filter(({ used, reusable, expired }) => {
+    ? enrichKeys(state.value?.preAuthKeys).filter(
+        ({ used, reusable, expired }) => {
           // Show all keys
           if (!onlyShowUsable.value) return true;
 
@@ -326,7 +319,8 @@ const enrichedKeys = computed(() =>
           if (used && !reusable) return false;
 
           return true;
-        })
+        },
+      )
     : [],
 );
 </script>
