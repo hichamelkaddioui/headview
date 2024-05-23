@@ -1,11 +1,9 @@
 <template>
   <ModalView :open="open" @close="$emit('close')">
     <div class="my-2">
-      <h3
-        class="mb-6 flex items-center text-lg font-medium leading-6 text-gray-900"
-      >
+      <h3 class="mb-6 flex items-center text-lg font-medium leading-6">
         <div
-          class="mr-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600 sm:h-10 sm:w-10"
+          class="mr-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600 sm:h-10 sm:w-10 dark:bg-red-900 dark:text-red-400"
         >
           <UserIcon class="h-5 w-5" aria-hidden="true" />
         </div>
@@ -13,7 +11,7 @@
         Delete user
       </h3>
 
-      <p class="text-sm text-gray-500">
+      <p class="text-sm text-gray-500 dark:text-slate-300">
         Are you sure you want to delete the user
         <b>{{ user }} </b>? This action cannot be undone.
       </p>
@@ -38,7 +36,7 @@
       </button>
       <button
         type="button"
-        class="mt-3 inline-flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+        class="mt-3 inline-flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-base font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm dark:border-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
         @click="$emit('close')"
         ref="cancelButtonRef"
       >

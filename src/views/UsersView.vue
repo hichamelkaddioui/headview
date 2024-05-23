@@ -8,13 +8,18 @@
     Create new user
   </button>
 
-  <div class="rounded-lg border border-gray-300 bg-white sm:rounded-2xl">
-    <ul role="list" class="-my-5 divide-y divide-gray-200 p-6">
+  <div
+    class="rounded-lg border border-gray-300 bg-white sm:rounded-2xl dark:border-gray-700 dark:bg-slate-800"
+  >
+    <ul
+      role="list"
+      class="-my-5 divide-y divide-gray-200 p-6 dark:divide-gray-600"
+    >
       <li v-if="isLoading" class="animate-pulse">
         <div class="flex min-h-20 items-center space-x-4">
           <div class="min-w-0 flex-1">
-            <p class="h-4 rounded-full bg-gray-200"></p>
-            <p class="mt-2 h-4 rounded-full bg-gray-200"></p>
+            <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
+            <p class="mt-2 h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
           </div>
         </div>
       </li>
@@ -22,10 +27,10 @@
       <li v-else v-for="user in users" :key="user.id" class="py-4">
         <div class="flex items-center space-x-4">
           <div class="min-w-0 flex-1">
-            <p class="truncate text-sm font-medium text-gray-900">
+            <p class="truncate text-sm font-medium">
               {{ user.name }}
             </p>
-            <p class="mt-2 truncate text-sm text-gray-500">
+            <p class="mt-2 truncate text-sm text-gray-500 dark:text-slate-200">
               {{ new Date(user.createdAt).toLocaleString() }}
             </p>
           </div>

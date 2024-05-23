@@ -1,11 +1,9 @@
 <template>
   <ModalView size="xl" :open="open" @before-enter="fetchKeys">
     <div class="my-2">
-      <h3
-        class="mb-6 flex items-center text-lg font-medium leading-6 text-gray-900"
-      >
+      <h3 class="mb-6 flex items-center text-lg font-medium leading-6">
         <div
-          class="mr-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 sm:h-10 sm:w-10"
+          class="mr-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 sm:h-10 sm:w-10 dark:bg-indigo-800 dark:text-indigo-300"
         >
           <KeyIcon class="h-5 w-5" aria-hidden="true" />
         </div>
@@ -14,15 +12,17 @@
       </h3>
     </div>
 
-    <h3 class="mb-6 mt-12 text-lg font-medium leading-6 text-gray-900">
+    <h3 class="mb-6 mt-12 text-lg font-medium leading-6">
       Create pre-authentication key
     </h3>
 
-    <div class="rounded-lg border border-gray-300 bg-white p-6 sm:rounded-2xl">
+    <div
+      class="rounded-lg border border-gray-300 bg-white p-6 sm:rounded-2xl dark:border-gray-700 dark:bg-slate-900"
+    >
       <form @submit.prevent="() => createKey()">
         <div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
           <div class="relative items-start">
-            <label for="name" class="block text-sm font-medium text-gray-900">
+            <label for="name" class="block text-sm font-medium">
               Expiration date
             </label>
             <div class="mt-3">
@@ -30,10 +30,10 @@
                 type="date"
                 name="name"
                 id="name"
-                class="block w-full rounded-lg border-gray-300 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:border-slate-600 dark:bg-slate-700 dark:placeholder:text-gray-400 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
                 v-model="createPreAuthKeyModel.expiration"
               />
-              <p class="mt-2 text-sm text-gray-500">
+              <p class="mt-2 text-sm text-slate-500 dark:text-slate-300">
                 Date at which the key expires
               </p>
             </div>
@@ -50,10 +50,8 @@
               />
             </div>
             <div class="ml-3 text-sm">
-              <label for="reusable" class="font-medium text-gray-900">
-                Reusable
-              </label>
-              <p class="text-gray-500">
+              <label for="reusable" class="font-medium"> Reusable </label>
+              <p class="text-slate-500 dark:text-slate-300">
                 Use this key to authenticate more than one device
               </p>
             </div>
@@ -69,10 +67,8 @@
               />
             </div>
             <div class="ml-3 text-sm">
-              <label for="ephemeral" class="font-medium text-gray-900">
-                Ephemeral
-              </label>
-              <p class="text-gray-500">
+              <label for="ephemeral" class="font-medium"> Ephemeral </label>
+              <p class="text-slate-500 dark:text-slate-300">
                 Devices authenticated by this key will be automatically removed
                 after going offline
               </p>
@@ -90,27 +86,25 @@
       </form>
     </div>
 
-    <h3 class="mb-6 mt-12 text-lg font-medium leading-6 text-gray-900">
+    <h3 class="mb-6 mt-12 text-lg font-medium leading-6">
       Pre-authentication keys list
     </h3>
 
     <div class="my-4">
       <SwitchButton v-model="onlyShowUsable">
-        <span class="text-sm font-medium text-gray-900">
-          Only show usable keys
-        </span>
+        <span class="text-sm font-medium"> Only show usable keys </span>
       </SwitchButton>
     </div>
 
     <div
-      class="overflow-hidden rounded-xl border border-gray-300 bg-white ring-1 ring-black ring-opacity-5 sm:rounded-2xl"
+      class="overflow-hidden rounded-xl border border-gray-300 ring-1 ring-black ring-opacity-5 sm:rounded-2xl dark:border-gray-600"
     >
       <div class="relative overflow-x-auto">
         <table
-          class="w-full whitespace-nowrap text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400"
+          class="w-full whitespace-nowrap text-left text-sm text-gray-500 rtl:text-right dark:text-white"
         >
           <thead
-            class="border-b border-gray-300 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
+            class="border-b border-gray-300 bg-gray-50 text-xs uppercase text-gray-700 dark:border-gray-600 dark:bg-slate-700 dark:text-slate-300"
           >
             <tr>
               <th scope="col" class="px-5 py-6">Key</th>
@@ -124,18 +118,27 @@
           </thead>
           <tbody>
             <tr v-if="isLoading" class="animate-pulse">
-              <th
-                scope="row"
-                class="p-6 font-normal text-gray-900 dark:text-white"
-              >
-                <p class="h-4 rounded-full bg-gray-200"></p>
+              <th scope="row" class="p-6 font-normal">
+                <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
               </th>
-              <td class="px-3"><p class="h-4 rounded-full bg-gray-200"></p></td>
-              <td class="px-3"><p class="h-4 rounded-full bg-gray-200"></p></td>
-              <td class="px-3"><p class="h-4 rounded-full bg-gray-200"></p></td>
-              <td class="px-3"><p class="h-4 rounded-full bg-gray-200"></p></td>
-              <td class="px-3"><p class="h-4 rounded-full bg-gray-200"></p></td>
-              <td class="px-3"><p class="h-4 rounded-full bg-gray-200"></p></td>
+              <td class="px-3">
+                <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
+              </td>
+              <td class="px-3">
+                <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
+              </td>
+              <td class="px-3">
+                <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
+              </td>
+              <td class="px-3">
+                <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
+              </td>
+              <td class="px-3">
+                <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
+              </td>
+              <td class="px-3">
+                <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
+              </td>
             </tr>
             <tr v-else-if="enrichedKeys.length === 0">
               <td colspan="7" class="p-6 text-center">No keys to show</td>
@@ -143,16 +146,13 @@
             <tr
               v-for="key in enrichedKeys"
               :key="key.id"
-              class="border-b bg-white last:border-none hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-800"
+              class="border-b bg-white last:border-none hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-800 dark:hover:bg-slate-700/80"
             >
-              <th
-                scope="row"
-                class="px-3 py-6 font-normal text-gray-900 dark:text-white"
-              >
+              <th scope="row" class="px-3 py-6 font-normal dark:text-white">
                 <UseClipboard v-slot="{ copy, copied }" :source="key.key">
                   <span
                     @click="copy()"
-                    class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-gray-800 hover:cursor-pointer"
+                    class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-gray-800 dark:border-gray-500 dark:bg-slate-600 dark:text-slate-100"
                   >
                     <code>{{ copied ? "Copied!" : key.key }}</code>
                   </span>
@@ -161,20 +161,20 @@
               <td class="px-3">
                 <span
                   v-if="key.expired"
-                  class="me-2 rounded-lg border border-yellow-400 bg-yellow-100 px-2.5 py-1 text-yellow-800"
+                  class="me-2 rounded-lg border border-yellow-400 bg-yellow-100 px-2.5 py-1 text-yellow-800 dark:border-yellow-700 dark:bg-yellow-900 dark:text-yellow-200"
                 >
                   Expired
                 </span>
                 <span
                   v-else-if="key.used && !key.reusable"
-                  class="me-2 rounded-lg border border-gray-300 bg-white px-2.5 py-1 text-gray-800"
+                  class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-gray-800 dark:border-gray-500 dark:bg-slate-600 dark:text-slate-100"
                 >
                   Not expired
                 </span>
                 <button
                   v-else
                   type="button"
-                  class="inline-flex items-center rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  class="inline-flex items-center rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-500 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-900 dark:focus:ring-indigo-500 dark:focus:ring-offset-0"
                   @click="expirePreAuthKey(key.user, key.key)"
                 >
                   Expire
@@ -183,19 +183,19 @@
               <td class="px-3">
                 <span
                   v-if="!key.used"
-                  class="me-2 rounded-lg border border-green-400 bg-green-100 px-2.5 py-1 text-green-800"
+                  class="me-2 rounded-lg border border-green-400 bg-green-100 px-2.5 py-1 text-green-800 dark:border-green-700 dark:bg-green-900 dark:text-green-300"
                 >
                   Not used
                 </span>
                 <span
                   v-else-if="!key.ephemeral"
-                  class="me-2 rounded-lg border border-yellow-400 bg-yellow-100 px-2.5 py-1 text-gray-800"
+                  class="me-2 rounded-lg border border-yellow-400 bg-yellow-100 px-2.5 py-1 text-yellow-800 dark:border-yellow-700 dark:bg-yellow-900 dark:text-yellow-200"
                 >
                   Used
                 </span>
                 <span
                   v-else
-                  class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-gray-800"
+                  class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-gray-800 dark:border-gray-500 dark:bg-slate-600 dark:text-slate-100"
                 >
                   Used
                 </span>
@@ -203,13 +203,13 @@
               <td class="px-3">
                 <span
                   v-if="!key.ephemeral && key.reusable"
-                  class="me-2 rounded-lg border border-indigo-400 bg-indigo-100 px-2.5 py-1 text-indigo-800"
+                  class="me-2 rounded-lg border border-indigo-400 bg-indigo-100 px-2.5 py-1 text-indigo-800 dark:border-indigo-500 dark:bg-indigo-800 dark:text-indigo-200"
                 >
                   Reusable
                 </span>
                 <span
                   v-else
-                  class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-gray-800"
+                  class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-gray-800 dark:border-gray-500 dark:bg-slate-600 dark:text-slate-100"
                 >
                   Not reusable
                 </span>
@@ -217,13 +217,13 @@
               <td class="px-3">
                 <span
                   v-if="key.ephemeral"
-                  class="me-2 rounded-lg border border-yellow-400 bg-yellow-100 px-2.5 py-1 text-yellow-800"
+                  class="me-2 rounded-lg border border-yellow-400 bg-yellow-100 px-2.5 py-1 text-yellow-800 dark:border-yellow-700 dark:bg-yellow-900 dark:text-yellow-200"
                 >
                   Ephemeral
                 </span>
                 <span
                   v-else
-                  class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-1 text-gray-800"
+                  class="me-2 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-gray-800 dark:border-gray-500 dark:bg-slate-600 dark:text-slate-100"
                 >
                   Not ephemeral
                 </span>
@@ -243,7 +243,7 @@
     <div class="mx-auto mt-5 max-w-sm sm:mt-12">
       <button
         type="button"
-        class="mt-3 inline-flex w-full justify-center rounded-xl border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+        class="mt-3 inline-flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-base font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm dark:border-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
         @click="$emit('close')"
       >
         Close

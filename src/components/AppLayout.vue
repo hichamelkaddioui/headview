@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Mobile sidebar -->
     <TransitionRoot as="template" :show="sidebarOpen">
       <Dialog
         as="div"
@@ -29,7 +30,7 @@
             leave-to="-translate-x-full"
           >
             <DialogPanel
-              class="relative flex w-full max-w-xs flex-1 flex-col bg-white"
+              class="relative flex w-full max-w-xs flex-1 flex-col bg-white text-gray-900 dark:bg-slate-900 dark:text-slate-200"
             >
               <TransitionChild
                 as="template"
@@ -67,9 +68,8 @@
 
     <!-- Static sidebar for desktop -->
     <div class="hidden md:fixed md:inset-y-0 md:flex md:w-72 md:flex-col">
-      <!-- Sidebar component, swap this element with another sidebar if you like -->
       <div
-        class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white"
+        class="flex min-h-0 flex-1 flex-col border-r border-gray-200 text-gray-900 dark:border-gray-700 dark:bg-slate-900 dark:text-slate-200"
       >
         <div class="flex flex-1 flex-col overflow-y-auto pt-5">
           <AppSidebar />
@@ -81,7 +81,7 @@
 
     <div class="flex flex-1 flex-col md:pl-72">
       <div
-        class="sticky top-0 z-10 bg-white pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden"
+        class="sticky top-0 z-10 bg-white pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden dark:bg-slate-900"
       >
         <button
           type="button"
@@ -96,7 +96,7 @@
       <main class="flex-1">
         <div class="py-6">
           <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-            <h1 class="text-2xl font-semibold text-gray-900">
+            <h1 class="text-2xl font-semibold">
               {{ $route.name }}
             </h1>
           </div>

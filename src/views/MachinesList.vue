@@ -8,14 +8,14 @@
   </button>
 
   <div
-    class="overflow-hidden rounded-xl border border-gray-300 bg-white ring-1 ring-black ring-opacity-5 sm:rounded-2xl"
+    class="overflow-hidden rounded-xl border border-gray-300 ring-1 ring-black ring-opacity-5 sm:rounded-2xl dark:border-gray-600"
   >
     <div class="relative overflow-x-auto">
       <table
-        class="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400"
+        class="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-white"
       >
         <thead
-          class="border-b border-gray-300 bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
+          class="border-b border-gray-300 bg-gray-50 text-xs uppercase text-gray-700 dark:border-gray-600 dark:bg-slate-700 dark:text-slate-300"
         >
           <tr>
             <th scope="col" class="p-6">Name</th>
@@ -30,22 +30,27 @@
         <tbody>
           <tr v-if="isLoading">
             <th scope="row" class="whitespace-nowrap px-6 py-4">
-              <p class="h-4 rounded-full bg-gray-200"></p>
+              <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
             </th>
-            <td class="p-6"><p class="h-4 rounded-full bg-gray-200"></p></td>
-            <td class="p-6"><p class="h-4 rounded-full bg-gray-200"></p></td>
-            <td class="p-6"><p class="h-4 rounded-full bg-gray-200"></p></td>
-            <td class="p-6"><p class="h-4 rounded-full bg-gray-200"></p></td>
+            <td class="p-6">
+              <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
+            </td>
+            <td class="p-6">
+              <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
+            </td>
+            <td class="p-6">
+              <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
+            </td>
+            <td class="p-6">
+              <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
+            </td>
           </tr>
           <tr
             v-for="machine in machines"
             :key="machine.id"
-            class="border-b bg-white last:border-none hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-800"
+            class="border-b bg-white last:border-none hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-800 dark:hover:bg-slate-700/80"
           >
-            <th
-              scope="row"
-              class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
-            >
+            <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium">
               {{ machine.givenName }}
             </th>
             <td class="p-6">
@@ -88,7 +93,7 @@
             <td class="p-6">
               <button
                 type="button"
-                class="inline-flex items-center rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                class="inline-flex items-center rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-500 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-900 dark:focus:ring-indigo-500 dark:focus:ring-offset-0"
                 @click="
                   $router.push({
                     name: 'Machine details',

@@ -2,7 +2,7 @@
   <div class="inline-flex rounded-lg shadow-sm">
     <button
       type="button"
-      class="relative inline-flex items-center rounded-l-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+      class="relative inline-flex items-center rounded-l-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-500 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-900 dark:focus:ring-offset-0"
       @click="$emit('keys')"
     >
       <KeyIcon class="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
@@ -13,7 +13,7 @@
     <Menu as="div" class="relative -ml-px block">
       <div>
         <MenuButton
-          class="inline-flex w-full justify-center rounded-r-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          class="inline-flex w-full justify-center rounded-r-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-500 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-900 dark:focus:ring-offset-0"
         >
           Options
           <ChevronDownIcon class="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
@@ -29,20 +29,22 @@
         leave-to-class="transform opacity-0 scale-95"
       >
         <MenuItems
-          class="absolute right-0 z-30 mt-2 w-56 origin-top-right divide-y divide-gray-200 rounded-lg bg-white shadow-sm ring-1 ring-black ring-opacity-20 focus:outline-none"
+          class="absolute right-0 z-30 mt-2 w-56 origin-top-right divide-y divide-gray-200 rounded-lg bg-white shadow-sm ring-1 ring-black ring-opacity-20 focus:outline-none dark:divide-gray-700 dark:border-gray-200 dark:bg-slate-800"
         >
           <div class="py-1">
             <MenuItem v-slot="{ active }">
               <a
                 href="#"
                 :class="[
-                  active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                  active
+                    ? 'bg-gray-100 dark:bg-slate-700'
+                    : 'text-gray-700 dark:text-slate-200',
                   'group flex items-center px-4 py-2 text-sm',
                 ]"
                 @click="$emit('rename')"
               >
                 <PencilSquareIcon
-                  class="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-600"
+                  class="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-600 dark:text-slate-200 dark:group-hover:text-gray-300"
                   aria-hidden="true"
                 />
                 Rename user
@@ -54,13 +56,15 @@
               <a
                 href="#"
                 :class="[
-                  active ? 'bg-gray-100 text-red-600' : 'text-red-500',
+                  active
+                    ? 'bg-gray-100 text-red-600 dark:bg-slate-700 dark:text-red-500'
+                    : 'text-red-500',
                   'group flex items-center px-4 py-2 text-sm font-medium',
                 ]"
                 @click="$emit('delete')"
               >
                 <TrashIcon
-                  class="mr-3 h-5 w-5 text-red-500 group-hover:text-red-600"
+                  class="mr-3 h-5 w-5 text-red-500 group-hover:text-red-600 dark:group-hover:text-red-500"
                   aria-hidden="true"
                 />
                 Delete user

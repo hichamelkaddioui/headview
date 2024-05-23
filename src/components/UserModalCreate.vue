@@ -1,11 +1,9 @@
 <template>
   <ModalView :open="open" @close="$emit('close')" @before-enter="username = ''">
     <div class="my-2">
-      <h3
-        class="mb-6 flex items-center text-lg font-medium leading-6 text-gray-900"
-      >
+      <h3 class="mb-6 flex items-center text-lg font-medium leading-6">
         <div
-          class="mr-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 sm:h-10 sm:w-10"
+          class="mr-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 sm:h-10 sm:w-10 dark:bg-indigo-800 dark:text-indigo-300"
         >
           <UserPlusIcon class="h-5 w-5" aria-hidden="true" />
         </div>
@@ -16,15 +14,13 @@
       <ErrorView v-if="error" :error="errorMessage" class="my-5" />
 
       <form action="#" @submit.prevent="onCreateSubmit">
-        <label for="name" class="block text-sm font-medium text-gray-900">
-          User name
-        </label>
+        <label for="name" class="block text-sm font-medium"> User name </label>
         <div class="mt-3">
           <input
             type="text"
             name="name"
             id="name"
-            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:border-slate-600 dark:bg-slate-700 dark:placeholder:text-gray-400 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
             v-model="username"
           />
         </div>
@@ -36,7 +32,7 @@
     >
       <button
         type="button"
-        class="inline-flex w-full justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500 sm:col-start-2 sm:text-sm"
+        class="inline-flex w-full justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500 sm:col-start-2 sm:text-sm dark:disabled:bg-gray-800"
         @click="onCreateSubmit"
         :disabled="isEmpty || isLoading"
       >
@@ -50,7 +46,7 @@
       </button>
       <button
         type="button"
-        class="mt-3 inline-flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+        class="mt-3 inline-flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-base font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm dark:border-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
         @click="$emit('close')"
         ref="cancelButtonRef"
       >

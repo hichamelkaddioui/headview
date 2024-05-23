@@ -10,13 +10,12 @@
     <div class="mt-16 px-4 sm:mx-auto sm:w-full sm:max-w-xl">
       <ErrorView v-if="loginError" :error="loginError" />
 
-      <div class="rounded-lg border bg-white px-4 py-8 sm:rounded-2xl sm:px-10">
+      <div
+        class="rounded-lg border bg-white px-4 py-8 sm:rounded-2xl sm:px-10 dark:border-gray-700 dark:bg-slate-900"
+      >
         <form class="space-y-6" action="#" @submit.prevent="login">
           <div>
-            <label
-              for="serverUrl"
-              class="block text-sm font-medium text-gray-900"
-            >
+            <label for="serverUrl" class="block text-sm font-medium">
               Server URL
             </label>
             <div class="mt-3">
@@ -25,21 +24,21 @@
                 name="serverUrl"
                 autocomplete="url"
                 placeholder="https://headscale.domain"
-                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:border-slate-600 dark:bg-slate-700 dark:placeholder:text-gray-400 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
                 v-model="baseUrl"
               />
             </div>
           </div>
 
           <div>
-            <label for="apiKey" class="block text-sm font-medium text-gray-900">
+            <label for="apiKey" class="block text-sm font-medium">
               API key
             </label>
             <div class="mt-3">
               <input
                 type="text"
                 name="apiKey"
-                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:border-slate-600 dark:bg-slate-700 dark:placeholder:text-gray-400 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
                 v-model="apiKey"
               />
             </div>
@@ -48,7 +47,7 @@
           <div>
             <button
               type="submit"
-              class="inline-flex w-full justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500 sm:col-start-2 sm:text-sm"
+              class="inline-flex w-full justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500 sm:col-start-2 sm:text-sm dark:disabled:bg-gray-800"
               @click="login"
               :disabled="isLoading"
             >

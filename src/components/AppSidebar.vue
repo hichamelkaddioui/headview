@@ -3,15 +3,15 @@
     <img class="h-8 w-auto" src="/headview.svg" alt="Headview" />
     <h3 class="ml-3 font-semibold">Headview</h3>
   </div>
-  <nav class="mt-5 flex-1 space-y-1 bg-white px-2">
+  <nav class="mt-5 flex-1 space-y-1 bg-white px-2 dark:bg-slate-900">
     <router-link
       v-for="{ name, path, current, icon } in navigation"
       :key="name"
       :to="path"
       :class="[
         current
-          ? 'bg-gray-100 text-indigo-600'
-          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+          ? 'bg-slate-100 text-indigo-600 dark:bg-slate-800 dark:text-indigo-300'
+          : 'text-gray-600 hover:bg-slate-50 hover:text-gray-900 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-gray-300',
         'group flex items-center rounded-xl px-2 py-2 text-sm font-medium',
       ]"
     >
@@ -19,8 +19,8 @@
         :is="icon"
         :class="[
           current
-            ? 'text-indigo-500'
-            : 'text-gray-400 group-hover:text-gray-500',
+            ? 'text-indigo-500 dark:text-indigo-300'
+            : 'text-gray-400 group-hover:text-gray-500 dark:text-slate-200 dark:group-hover:text-gray-300',
           'mr-3 h-6 w-6 flex-shrink-0',
         ]"
         aria-hidden="true"
