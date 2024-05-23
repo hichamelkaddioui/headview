@@ -174,20 +174,7 @@
       <div class="flex items-center justify-between px-4 py-5 sm:px-6">
         <div>
           <h3 class="flex text-lg font-medium leading-6">
-            <span
-              :class="[
-                machine.online ? 'bg-green-100' : 'bg-red-100',
-                'me-2 mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full  text-sm font-semibold text-gray-800 dark:bg-gray-700 dark:text-slate-300',
-              ]"
-            >
-              <div
-                :class="[
-                  machine.online ? 'bg-green-500' : 'bg-red-500',
-                  'h-1.5 w-1.5 rounded-full',
-                ]"
-              ></div>
-            </span>
-
+            <BadgeView class="me-2" :is-on="machine.online" />
             {{ machine.givenName }}
           </h3>
           <p
@@ -456,6 +443,7 @@ import {
   PencilSquareIcon,
 } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
+import BadgeView from "../components/BadgeView.vue";
 import CodeBlock from "../components/CodeBlock.vue";
 import MachineModalDelete from "../components/MachineModalDelete.vue";
 import MachineModalRename from "../components/MachineModalRename.vue";

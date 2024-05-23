@@ -20,7 +20,6 @@
           <tr>
             <th scope="col" class="p-6">Name</th>
             <th scope="col" class="p-6">IP Addresses</th>
-            <th scope="col" class="p-6">Status</th>
             <th scope="col" class="p-6">User</th>
             <th scope="col" class="p-6">
               <span class="sr-only">Options</span>
@@ -41,9 +40,6 @@
             <td class="p-6">
               <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
             </td>
-            <td class="p-6">
-              <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
-            </td>
           </tr>
           <tr
             v-for="machine in machines"
@@ -51,6 +47,8 @@
             class="border-b bg-white last:border-none hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-800 dark:hover:bg-slate-700/80"
           >
             <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium">
+              <BadgeView class="me-2" :is-on="machine.online" />
+
               {{ machine.givenName }}
             </th>
             <td class="p-6">
@@ -66,28 +64,6 @@
                   <CodeBlock :text="copied ? 'Copied!' : ip" @click="copy()" />
                 </UseClipboard>
               </span>
-            </td>
-            <td class="p-6">
-              <div class="flex items-center">
-                <template v-if="machine.online">
-                  <span
-                    class="inline-flex items-center rounded-full bg-green-100 px-3 py-0.5 text-green-800"
-                  >
-                    <div
-                      class="me-2 h-1.5 w-1.5 rounded-full bg-green-500"
-                    ></div>
-                    Online
-                  </span>
-                </template>
-                <template v-else>
-                  <span
-                    class="inline-flex items-center rounded-full bg-red-100 px-3 py-0.5 text-red-800"
-                  >
-                    <div class="me-2 h-1.5 w-1.5 rounded-full bg-red-500"></div>
-                    Offline
-                  </span>
-                </template>
-              </div>
             </td>
             <td class="p-6">{{ machine.user?.name }}</td>
             <td class="p-6">
@@ -120,6 +96,7 @@ import { computed } from "vue";
 import { SquaresPlusIcon } from "@heroicons/vue/24/outline";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
+import BadgeView from "../components/BadgeView.vue";
 import CodeBlock from "../components/CodeBlock.vue";
 import { Machine } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
