@@ -32,11 +32,11 @@
     <div
       class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3"
     >
-      <button
-        type="button"
-        class="inline-flex w-full justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500 sm:col-start-2 sm:text-sm dark:disabled:bg-gray-800"
+      <ButtonView
+        variant="indigo"
+        class="w-full justify-center sm:col-start-2"
         @click="onRenameSubmit"
-        :disabled="isLoading"
+        :disabled="isEmpty || isLoading"
       >
         <ArrowPathIcon
           v-if="isLoading"
@@ -45,15 +45,14 @@
         ></ArrowPathIcon>
 
         Rename
-      </button>
-      <button
-        type="button"
-        class="mt-3 inline-flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-base font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm dark:border-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
+      </ButtonView>
+
+      <ButtonView
         @click="$emit('close')"
-        ref="cancelButtonRef"
+        class="mt-3 w-full justify-center sm:col-start-1 sm:mt-0"
       >
         Cancel
-      </button>
+      </ButtonView>
     </div>
   </ModalView>
 </template>
@@ -63,6 +62,7 @@ import { computed, ref } from "vue";
 import { ArrowPathIcon, ServerIcon } from "@heroicons/vue/24/outline";
 import { Machine } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
+import ButtonView from "./ButtonView.vue";
 import ModalView from "./ModalView.vue";
 
 const props = defineProps<{ open: boolean; machine: Machine }>();
@@ -88,4 +88,5 @@ const stateOptions = { immediate: false, onSuccess: () => emit("update") };
 const { execute, isLoading } = useStateApi(apiCall, stateOptions);
 
 const onRenameSubmit = () => execute();
+const isEmpty = computed(() => newMachineName.value.length === 0);
 </script>

@@ -1,12 +1,9 @@
 <template>
-  <button
-    type="button"
-    class="my-12 inline-flex items-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-    @click="modalCreateOpen = true"
-  >
+  <ButtonView variant="indigo" class="my-12" @click="modalCreateOpen = true">
     <UserPlusIcon class="-ml-1 mr-2 h-6 w-6" aria-hidden="true" />
+
     Create new user
-  </button>
+  </ButtonView>
 
   <div
     class="rounded-lg border border-gray-300 bg-white sm:rounded-2xl dark:border-gray-700 dark:bg-slate-800"
@@ -78,6 +75,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { UserPlusIcon } from "@heroicons/vue/24/outline";
+import ButtonView from "../components/ButtonView.vue";
 import PreAuthKeysModalView from "../components/PreAuthKeysModal.vue";
 import UserButtons from "../components/UserButtons.vue";
 import UserModalCreate from "../components/UserModalCreate.vue";

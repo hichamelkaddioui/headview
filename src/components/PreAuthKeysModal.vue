@@ -74,13 +74,9 @@
           </div>
         </div>
 
-        <button
-          type="button"
-          class="mt-4 inline-flex justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          @click="() => createKey()"
-        >
+        <ButtonView @click="() => createKey()" variant="indigo" class="mt-4">
           Create key
-        </button>
+        </ButtonView>
       </form>
     </CardView>
 
@@ -120,14 +116,9 @@
         <ChipView v-if="expired" variant="yellow"> Expired </ChipView>
         <ChipView v-else-if="used && !reusable"> Not expired </ChipView>
 
-        <button
-          v-else
-          type="button"
-          class="inline-flex items-center rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-500 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-900 dark:focus:ring-indigo-500 dark:focus:ring-offset-0"
-          @click="expirePreAuthKey(user, key)"
-        >
+        <ButtonView v-else @click="expirePreAuthKey(user, key)">
           Expire
-        </button>
+        </ButtonView>
       </template>
 
       <template #usedCell="{ used, reusable }">
@@ -162,13 +153,9 @@
     </TableView>
 
     <div class="mx-auto mt-5 max-w-sm sm:mt-12">
-      <button
-        type="button"
-        class="mt-3 inline-flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-base font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm dark:border-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
-        @click="$emit('close')"
-      >
+      <ButtonView @click="$emit('close')" class="w-full justify-center">
         Close
-      </button>
+      </ButtonView>
     </div>
   </ModalView>
 </template>
@@ -180,6 +167,7 @@ import { KeyIcon } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
 import { enrichKeys } from "../helpers/keys";
 import { api, useStateApi } from "../plugins/api";
+import ButtonView from "./ButtonView.vue";
 import CardView from "./CardView.vue";
 import ChipView from "./ChipView.vue";
 import CodeBlock from "./CodeBlock.vue";
