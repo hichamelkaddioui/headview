@@ -78,7 +78,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { UserPlusIcon } from "@heroicons/vue/24/outline";
-import PreAuthKeysModalView from "../components/PreAuthKeysModalView.vue";
+import PreAuthKeysModalView from "../components/PreAuthKeysModal.vue";
 import UserButtons from "../components/UserButtons.vue";
 import UserModalCreate from "../components/UserModalCreate.vue";
 import UserModalDelete from "../components/UserModalDelete.vue";
