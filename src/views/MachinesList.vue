@@ -7,88 +7,39 @@
     Register new machine
   </button>
 
-  <div
-    class="overflow-hidden rounded-xl border border-gray-300 ring-1 ring-black ring-opacity-5 sm:rounded-2xl dark:border-gray-600"
+  <TableView
+    :data="machines"
+    :cols="['name', 'user', 'ipAddresses', 'details']"
+    :is-loading="isLoading"
   >
-    <div class="relative overflow-x-auto">
-      <table
-        class="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-white"
-      >
-        <thead
-          class="border-b border-gray-300 bg-gray-50 text-xs uppercase text-gray-700 dark:border-gray-600 dark:bg-slate-700 dark:text-slate-300"
-        >
-          <tr>
-            <th scope="col" class="p-6">Name</th>
-            <th scope="col" class="p-6">IP Addresses</th>
-            <th scope="col" class="p-6">User</th>
-            <th scope="col" class="p-6">
-              <span class="sr-only">Options</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-if="isLoading">
-            <th scope="row" class="whitespace-nowrap px-6 py-4">
-              <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
-            </th>
-            <td class="p-6">
-              <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
-            </td>
-            <td class="p-6">
-              <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
-            </td>
-            <td class="p-6">
-              <p class="h-4 rounded-full bg-gray-200 dark:bg-gray-700"></p>
-            </td>
-          </tr>
-          <tr
-            v-for="machine in machines"
-            :key="machine.id"
-            class="border-b bg-white last:border-none hover:bg-slate-50 dark:border-gray-700 dark:bg-slate-800 dark:hover:bg-slate-700/80"
-          >
-            <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium">
-              <BadgeView class="me-2" :is-on="machine.online" />
+    <template #nameCell="{ online, name }">
+      <span class="whitespace-nowrap font-medium">
+        <BadgeView class="me-2" :is-on="online" />
+        {{ name }}
+      </span>
+    </template>
 
-              {{ machine.givenName }}
-            </th>
-            <td class="p-6">
-              <span
-                v-for="ip in machine.ipAddresses.sort(
-                  (a, b) => a.length - b.length,
-                )"
-                :key="ip"
-                class="hover:cursor-pointer"
-                title="Click to copy"
-              >
-                <UseClipboard v-slot="{ copy, copied }" :source="ip">
-                  <CodeBlock :text="copied ? 'Copied!' : ip" @click="copy()" />
-                </UseClipboard>
-              </span>
-            </td>
-            <td class="p-6">{{ machine.user?.name }}</td>
-            <td class="p-6">
-              <button
-                type="button"
-                class="inline-flex items-center rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-500 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-900 dark:focus:ring-indigo-500 dark:focus:ring-offset-0"
-                @click="
-                  $router.push({
-                    name: 'Machine details',
-                    params: { id: machine.id },
-                  })
-                "
-              >
-                Details
-                <ArrowTopRightOnSquareIcon
-                  class="ms-2 h-5 w-5"
-                  aria-hidden="true"
-                />
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+    <template #ipAddressesColumn>IP Addresses</template>
+    <template #ipAddressesCell="{ ipAddresses }">
+      <span v-for="ip in ipAddresses" :key="ip" title="Click to copy">
+        <UseClipboard v-slot="{ copy, copied }" :source="ip">
+          <CodeBlock :text="copied ? 'Copied!' : ip" @click="copy()" />
+        </UseClipboard>
+      </span>
+    </template>
+
+    <template #detailsColumn><span class="sr-only">Options</span></template>
+    <template #detailsCell="{ id }">
+      <button
+        type="button"
+        class="inline-flex items-center rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-500 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-900 dark:focus:ring-indigo-500 dark:focus:ring-offset-0"
+        @click="$router.push({ name: 'Machine details', params: { id } })"
+      >
+        Details
+        <ArrowTopRightOnSquareIcon class="ms-2 h-5 w-5" aria-hidden="true" />
+      </button>
+    </template>
+  </TableView>
 </template>
 
 <script setup lang="ts">
@@ -98,18 +49,28 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
 import BadgeView from "../components/BadgeView.vue";
 import CodeBlock from "../components/CodeBlock.vue";
+import TableView from "../components/TableView.vue";
 import { Machine } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
 
 const { state, isLoading } = useStateApi(() => api().GET("/api/v1/machine"));
 
 const machines = computed(() => {
-  const nodes = <Machine[] | undefined>state.value?.machines;
+  const machinesFromApi = <Machine[] | undefined>state.value?.machines;
 
-  if (!nodes) {
+  if (!machinesFromApi) {
     return [];
   }
 
-  return nodes;
+  return machinesFromApi.map(
+    ({ id, givenName, online, ipAddresses, user }) => ({
+      id,
+      online,
+      name: givenName,
+      ipAddresses: ipAddresses.sort((a, b) => a.length - b.length),
+      user: user.name,
+      details: null,
+    }),
+  );
 });
 </script>
