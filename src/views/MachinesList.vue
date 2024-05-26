@@ -1,5 +1,5 @@
 <template>
-  <ButtonView variant="indigo" class="my-12">
+  <ButtonView variant="indigo" class="my-12" @click="modalRegisterOpen = true">
     <SquaresPlusIcon class="-ml-1 mr-2 h-6 w-6" aria-hidden="true" />
     Register new machine
   </ButtonView>
@@ -35,21 +35,32 @@
       </ButtonView>
     </template>
   </TableView>
+
+  <MachineModalRegister
+    :open="modalRegisterOpen"
+    @register="onModalRegister"
+    @close="modalRegisterOpen = false"
+  />
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { SquaresPlusIcon } from "@heroicons/vue/24/outline";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/outline";
 import { UseClipboard } from "@vueuse/components";
 import BadgeView from "../components/BadgeView.vue";
 import ButtonView from "../components/ButtonView.vue";
 import CodeBlock from "../components/CodeBlock.vue";
+import MachineModalRegister from "../components/MachineModalRegister.vue";
 import TableView from "../components/TableView.vue";
 import { Machine } from "../helpers/types";
 import { api, useStateApi } from "../plugins/api";
 
-const { state, isLoading } = useStateApi(() => api().GET("/api/v1/machine"));
+const modalRegisterOpen = ref(false);
+
+const { state, isLoading, execute } = useStateApi(() =>
+  api().GET("/api/v1/machine"),
+);
 
 const machines = computed(() => {
   const machinesFromApi = <Machine[] | undefined>state.value?.machines;
@@ -69,4 +80,9 @@ const machines = computed(() => {
     }),
   );
 });
+
+const onModalRegister = () => {
+  execute();
+  modalRegisterOpen.value = false;
+};
 </script>
