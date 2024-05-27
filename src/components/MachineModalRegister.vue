@@ -18,7 +18,7 @@
         Register new machine
       </h3>
 
-      <ErrorView v-if="error" :error="errorMessage" class="my-5" />
+      <ErrorView :error="error" class="my-5" />
 
       <form action="#" @submit.prevent="onCreateSubmit">
         <label for="user" class="block text-sm font-medium"> User </label>
@@ -108,7 +108,4 @@ const onCreateSubmit = () => !isEmpty.value && execute();
 const isEmpty = computed(
   () => nodeKey.value.length === 0 || selectedUser.value.length === 0,
 );
-const errorMessage = computed(() => {
-  return (error.value as { message: string })?.message;
-});
 </script>

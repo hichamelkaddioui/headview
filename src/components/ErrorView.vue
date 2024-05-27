@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-lg bg-red-50 p-4 dark:bg-red-900">
+  <div v-if="error" class="rounded-lg bg-red-50 p-4 dark:bg-red-900">
     <div class="flex">
       <div class="flex-shrink-0">
         <XCircleIcon
@@ -12,7 +12,7 @@
           That didn't work
         </h3>
         <div class="mt-2 text-sm text-red-700 dark:text-red-300">
-          <pre class="whitespace-normal">{{ error }}</pre>
+          <pre class="whitespace-normal">{{ errorMessage }}</pre>
         </div>
       </div>
     </div>
@@ -20,7 +20,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { XCircleIcon } from "@heroicons/vue/24/outline";
+import { getMessage } from "../helpers/error";
 
-defineProps<{ error: string }>();
+const props = defineProps<{ error: unknown }>();
+
+const errorMessage = computed(() => getMessage(props.error));
 </script>

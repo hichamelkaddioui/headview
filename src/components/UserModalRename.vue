@@ -15,6 +15,8 @@
         Rename user
       </h3>
 
+      <ErrorView :error="error" class="my-5" />
+
       <form action="#" @submit.prevent="onRenameSubmit">
         <label for="name" class="block text-sm font-medium"> New name </label>
         <div class="mt-3">
@@ -62,6 +64,7 @@ import { computed, ref } from "vue";
 import { ArrowPathIcon, UserIcon } from "@heroicons/vue/24/outline";
 import { api, useStateApi } from "../plugins/api";
 import ButtonView from "./ButtonView.vue";
+import ErrorView from "./ErrorView.vue";
 import ModalView from "./ModalView.vue";
 
 const props = defineProps<{ open: boolean; name: string }>();
@@ -79,7 +82,7 @@ const apiCallOptions = computed(() => {
 const apiCall = () =>
   api().POST("/api/v1/user/{oldName}/rename/{newName}", apiCallOptions.value);
 const stateOptions = { immediate: false, onSuccess: () => emit("update") };
-const { execute, isLoading } = useStateApi(apiCall, stateOptions);
+const { execute, isLoading, error } = useStateApi(apiCall, stateOptions);
 
 const onRenameSubmit = () => !isEmpty.value && execute();
 const isEmpty = computed(() => newUserName.value.length === 0);

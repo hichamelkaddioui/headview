@@ -167,7 +167,7 @@
     </div>
   </template>
 
-  <template v-if="machine">
+  <template v-else-if="machine">
     <div
       class="overflow-hidden rounded-lg border border-gray-300 bg-white sm:rounded-2xl dark:border-gray-700 dark:bg-slate-900 dark:text-white"
     >

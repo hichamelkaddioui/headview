@@ -39,7 +39,7 @@
       <template #header>
         <KeyIcon class="me-2 h-6 w-6 flex-shrink-0" />
 
-        Total keys
+        Total auth keys
       </template>
 
       <b class="mr-4 text-3xl md:text-5xl dark:text-gray-100">
@@ -51,11 +51,23 @@
       <template #header>
         <KeyIcon class="me-2 h-6 w-6 flex-shrink-0" />
 
-        Usable keys
+        Usable auth keys
       </template>
 
       <b class="mr-4 text-3xl md:text-5xl dark:text-gray-100">
         {{ usableKeys?.length || "-" }}
+      </b>
+    </StatCard>
+
+    <StatCard>
+      <template #header>
+        <WrenchScrewdriverIcon class="me-2 h-6 w-6 flex-shrink-0" />
+
+        API keys
+      </template>
+
+      <b class="mr-4 text-3xl md:text-5xl dark:text-gray-100">
+        {{ apiKeysState?.apiKeys?.length || "-" }}
       </b>
     </StatCard>
   </div>
@@ -63,7 +75,12 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { KeyIcon, ServerStackIcon, UsersIcon } from "@heroicons/vue/24/outline";
+import {
+  KeyIcon,
+  ServerStackIcon,
+  UsersIcon,
+  WrenchScrewdriverIcon,
+} from "@heroicons/vue/24/outline";
 import { useAsyncState } from "@vueuse/core";
 import StatCard from "../components/StatCard.vue";
 import { enrichKeys } from "../helpers/keys";
@@ -99,6 +116,7 @@ const { state: usersAndKeysState } = useAsyncState(
   getUsersAndKeys,
   emptyUsersAndKeys,
 );
+const { state: apiKeysState } = useStateApi(() => api().GET("/api/v1/apikey"));
 
 const machines = computed(() => machinesState.value?.machines);
 const onlineMachines = computed(() =>

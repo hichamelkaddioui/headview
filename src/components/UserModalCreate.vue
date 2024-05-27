@@ -1,5 +1,12 @@
 <template>
-  <ModalView :open="open" @close="$emit('close')" @before-enter="username = ''">
+  <ModalView
+    :open="open"
+    @close="$emit('close')"
+    @before-enter="
+      username = '';
+      error = '';
+    "
+  >
     <div class="my-2">
       <h3 class="mb-6 flex items-center text-lg font-medium leading-6">
         <div
@@ -11,7 +18,7 @@
         Create user
       </h3>
 
-      <ErrorView v-if="error" :error="errorMessage" class="my-5" />
+      <ErrorView :error="error" class="my-5" />
 
       <form action="#" @submit.prevent="onCreateSubmit">
         <label for="name" class="block text-sm font-medium"> User name </label>
@@ -81,7 +88,4 @@ const { execute, isLoading, error } = useStateApi(apiCall, stateOptions);
 const onCreateSubmit = () => !isEmpty.value && execute();
 
 const isEmpty = computed(() => username.value.length === 0);
-const errorMessage = computed(() => {
-  return (error.value as { message: string })?.message;
-});
 </script>
