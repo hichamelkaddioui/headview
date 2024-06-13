@@ -24,7 +24,7 @@
         <label for="user" class="block text-sm font-medium"> User </label>
         <div class="mb-4 mt-3">
           <select
-            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:border-slate-600 dark:bg-slate-700 dark:placeholder:text-gray-400 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
             v-model="selectedUser"
           >
             <option v-for="user in userState?.users" :key="user.id">
